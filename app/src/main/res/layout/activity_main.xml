@@ -93,7 +93,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Aplikasi ini berfungsi untuk....."
+                        android:text="Sistem ini merupakan platform digital yang memungkinkan pengguna untuk melakukan pemesanan janji temu layanan kesehatan secara online, dengan akses informasi jadwal dokter secara real-time serta pengelolaan appointment yang terstruktur."
                         android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
