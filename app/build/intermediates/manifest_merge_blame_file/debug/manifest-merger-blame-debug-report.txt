@@ -9,86 +9,104 @@
 9        android:targetSdkVersion="34" />
 10
 11    <permission
-11-->[androidx.core:core:1.9.0] /home/calista/.gradle/caches/transforms-3/b3b90de7b11f9ac5d1a5c7cfd3770254/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+11-->[androidx.core:core:1.9.0] C:\Users\Nitro\.gradle\caches\transforms-3\b3b90de7b11f9ac5d1a5c7cfd3770254\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
 12        android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-12-->[androidx.core:core:1.9.0] /home/calista/.gradle/caches/transforms-3/b3b90de7b11f9ac5d1a5c7cfd3770254/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+12-->[androidx.core:core:1.9.0] C:\Users\Nitro\.gradle\caches\transforms-3\b3b90de7b11f9ac5d1a5c7cfd3770254\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
 13        android:protectionLevel="signature" />
-13-->[androidx.core:core:1.9.0] /home/calista/.gradle/caches/transforms-3/b3b90de7b11f9ac5d1a5c7cfd3770254/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+13-->[androidx.core:core:1.9.0] C:\Users\Nitro\.gradle\caches\transforms-3\b3b90de7b11f9ac5d1a5c7cfd3770254\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
 14
-15    <uses-permission android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Permission untuk telepon -->
-15-->[androidx.core:core:1.9.0] /home/calista/.gradle/caches/transforms-3/b3b90de7b11f9ac5d1a5c7cfd3770254/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
-15-->[androidx.core:core:1.9.0] /home/calista/.gradle/caches/transforms-3/b3b90de7b11f9ac5d1a5c7cfd3770254/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
-16    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+15    <uses-permission android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+15-->[androidx.core:core:1.9.0] C:\Users\Nitro\.gradle\caches\transforms-3\b3b90de7b11f9ac5d1a5c7cfd3770254\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+15-->[androidx.core:core:1.9.0] C:\Users\Nitro\.gradle\caches\transforms-3\b3b90de7b11f9ac5d1a5c7cfd3770254\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+16
 17    <application
-17-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:8:5-32:19
+17-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:5:5-40:19
 18        android:allowBackup="true"
-18-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:9:9-35
+18-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:6:9-35
 19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-19-->[androidx.core:core:1.9.0] /home/calista/.gradle/caches/transforms-3/b3b90de7b11f9ac5d1a5c7cfd3770254/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+19-->[androidx.core:core:1.9.0] C:\Users\Nitro\.gradle\caches\transforms-3\b3b90de7b11f9ac5d1a5c7cfd3770254\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
 20        android:debuggable="true"
 21        android:extractNativeLibs="false"
 22        android:icon="@mipmap/ic_launcher"
-22-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:10:9-43
+22-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:7:9-43
 23        android:label="@string/app_name"
-23-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:11:9-41
+23-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:8:9-41
 24        android:roundIcon="@mipmap/ic_launcher_round"
-24-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:12:9-54
+24-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:9:9-54
 25        android:supportsRtl="true"
-25-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:13:9-35
+25-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:10:9-35
 26        android:testOnly="true"
 27        android:theme="@style/Theme.HealthcareApp" >
-27-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:14:9-51
+27-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:11:9-51
 28
-29        <!-- Main Activity -->
+29        <!-- Login Activity (Launcher) -->
 30        <activity
-30-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:17:9-24:20
-31            android:name="com.example.healthcareapp.MainActivity"
-31-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:18:13-41
+30-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:14:9-21:20
+31            android:name="com.example.healthcareapp.LoginActivity"
+31-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:15:13-42
 32            android:exported="true" >
-32-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:19:13-36
+32-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:16:13-36
 33            <intent-filter>
-33-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:20:13-23:29
+33-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:17:13-20:29
 34                <action android:name="android.intent.action.MAIN" />
-34-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:21:17-69
-34-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:21:25-66
+34-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:18:17-69
+34-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:18:25-66
 35
 36                <category android:name="android.intent.category.LAUNCHER" />
-36-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:22:17-77
-36-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:22:27-74
+36-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:19:17-77
+36-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:19:27-74
 37            </intent-filter>
 38        </activity>
 39
-40        <!-- Profile Activity -->
+40        <!-- Main Activity -->
 41        <activity
-41-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:27:9-30:58
-42            android:name="com.example.healthcareapp.ProfileActivity"
-42-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:28:13-44
-43            android:exported="false"
-43-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:29:13-37
-44            android:parentActivityName="com.example.healthcareapp.MainActivity" />
-44-->/home/calista/AndroidStudioProjects/pab/app/src/main/AndroidManifest.xml:30:13-55
-45
-46        <provider
-46-->[androidx.emoji2:emoji2:1.2.0] /home/calista/.gradle/caches/transforms-3/505b7080d3326db31ccc54c35d672fae/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-47            android:name="androidx.startup.InitializationProvider"
-47-->[androidx.emoji2:emoji2:1.2.0] /home/calista/.gradle/caches/transforms-3/505b7080d3326db31ccc54c35d672fae/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
-48            android:authorities="com.example.healthcareapp.androidx-startup"
-48-->[androidx.emoji2:emoji2:1.2.0] /home/calista/.gradle/caches/transforms-3/505b7080d3326db31ccc54c35d672fae/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
-49            android:exported="false" >
-49-->[androidx.emoji2:emoji2:1.2.0] /home/calista/.gradle/caches/transforms-3/505b7080d3326db31ccc54c35d672fae/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
-50            <meta-data
-50-->[androidx.emoji2:emoji2:1.2.0] /home/calista/.gradle/caches/transforms-3/505b7080d3326db31ccc54c35d672fae/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-51                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-51-->[androidx.emoji2:emoji2:1.2.0] /home/calista/.gradle/caches/transforms-3/505b7080d3326db31ccc54c35d672fae/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-52                android:value="androidx.startup" />
-52-->[androidx.emoji2:emoji2:1.2.0] /home/calista/.gradle/caches/transforms-3/505b7080d3326db31ccc54c35d672fae/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
-53            <meta-data
-53-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/calista/.gradle/caches/transforms-3/968e34b57013fdf0f947663e0da6cf5b/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
-54                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-54-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/calista/.gradle/caches/transforms-3/968e34b57013fdf0f947663e0da6cf5b/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
-55                android:value="androidx.startup" />
-55-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/calista/.gradle/caches/transforms-3/968e34b57013fdf0f947663e0da6cf5b/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
-56        </provider>
-57    </application>
-58
-59</manifest>
+41-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:24:9-26:40
+42            android:name="com.example.healthcareapp.MainActivity"
+42-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:25:13-41
+43            android:exported="false" />
+43-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:26:13-37
+44
+45        <!-- Profile Activity -->
+46        <activity
+46-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:29:9-32:58
+47            android:name="com.example.healthcareapp.ProfileActivity"
+47-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:30:13-44
+48            android:exported="false"
+48-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:31:13-37
+49            android:parentActivityName="com.example.healthcareapp.MainActivity" />
+49-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:32:13-55
+50
+51        <!-- History Activity -->
+52        <activity
+52-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:35:9-38:58
+53            android:name="com.example.healthcareapp.HistoryActivity"
+53-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:36:13-44
+54            android:exported="false"
+54-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:37:13-37
+55            android:parentActivityName="com.example.healthcareapp.MainActivity" />
+55-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:38:13-55
+56
+57        <provider
+57-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Nitro\.gradle\caches\transforms-3\505b7080d3326db31ccc54c35d672fae\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+58            android:name="androidx.startup.InitializationProvider"
+58-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Nitro\.gradle\caches\transforms-3\505b7080d3326db31ccc54c35d672fae\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+59            android:authorities="com.example.healthcareapp.androidx-startup"
+59-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Nitro\.gradle\caches\transforms-3\505b7080d3326db31ccc54c35d672fae\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+60            android:exported="false" >
+60-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Nitro\.gradle\caches\transforms-3\505b7080d3326db31ccc54c35d672fae\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+61            <meta-data
+61-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Nitro\.gradle\caches\transforms-3\505b7080d3326db31ccc54c35d672fae\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+62                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+62-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Nitro\.gradle\caches\transforms-3\505b7080d3326db31ccc54c35d672fae\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+63                android:value="androidx.startup" />
+63-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Nitro\.gradle\caches\transforms-3\505b7080d3326db31ccc54c35d672fae\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+64            <meta-data
+64-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Nitro\.gradle\caches\transforms-3\968e34b57013fdf0f947663e0da6cf5b\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+65                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+65-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Nitro\.gradle\caches\transforms-3\968e34b57013fdf0f947663e0da6cf5b\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+66                android:value="androidx.startup" />
+66-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Nitro\.gradle\caches\transforms-3\968e34b57013fdf0f947663e0da6cf5b\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+67        </provider>
+68    </application>
+69
+70</manifest>

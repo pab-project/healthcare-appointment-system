@@ -12,8 +12,8 @@
         android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Permission untuk telepon -->
-    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    <uses-permission android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
     <application
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -26,9 +26,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.HealthcareApp" >
 
-        <!-- Main Activity -->
+        <!-- Login Activity (Launcher) -->
         <activity
-            android:name="com.example.healthcareapp.MainActivity"
+            android:name="com.example.healthcareapp.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,9 +37,20 @@
             </intent-filter>
         </activity>
 
+        <!-- Main Activity -->
+        <activity
+            android:name="com.example.healthcareapp.MainActivity"
+            android:exported="false" />
+
         <!-- Profile Activity -->
         <activity
             android:name="com.example.healthcareapp.ProfileActivity"
+            android:exported="false"
+            android:parentActivityName="com.example.healthcareapp.MainActivity" />
+
+        <!-- History Activity -->
+        <activity
+            android:name="com.example.healthcareapp.HistoryActivity"
             android:exported="false"
             android:parentActivityName="com.example.healthcareapp.MainActivity" />
 

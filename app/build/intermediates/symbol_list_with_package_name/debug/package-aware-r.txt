@@ -2710,6 +2710,7 @@ drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
 drawable badge_background
+drawable bg_status_completed
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -2724,6 +2725,7 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable ic_arrow_back_black_24
+drawable ic_back
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_keyboard_black_24dp
@@ -2891,6 +2893,7 @@ id animateToEnd
 id animateToStart
 id antiClockwise
 id anticipate
+id appBarLayout
 id arc
 id asConfigured
 id async
@@ -2913,6 +2916,8 @@ id btnBack
 id btnEmergency
 id btnFindHospital
 id btnGithub
+id btnGoToHistory
+id btnLogin
 id btnMember1
 id btnMember2
 id btnMember3
@@ -2999,6 +3004,8 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id etEmail
+id etPassword
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3170,6 +3177,7 @@ id right_icon
 id right_side
 id rounded
 id row_index_key
+id rvHistory
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
@@ -3280,6 +3288,7 @@ id title
 id titleDividerNoCustom
 id title_template
 id toggle
+id toolbar
 id top
 id topPanel
 id touch_outside
@@ -3291,17 +3300,26 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tvDate
+id tvDoctorName
 id tvProfileAngkatan
 id tvProfileDeskripsi
 id tvProfileJurusan
 id tvProfileNama
 id tvProfileNim
+id tvRegister
+id tvService
+id tvStatus
+id tvSubtitle
+id tvTitle
 id unchecked
 id uniform
 id unlabeled
 id up
 id useLogo
 id vertical_only
+id viewHeader
+id viewIndicator
 id view_offset_helper
 id view_transition
 id view_tree_lifecycle_owner
@@ -3425,6 +3443,8 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_history
+layout activity_login
 layout activity_main
 layout activity_profile
 layout custom_dialog
@@ -3443,6 +3463,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_history
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title

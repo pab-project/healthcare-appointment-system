@@ -14,7 +14,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        // Ambil data dari Intent (Explicit Intent - dikirim dari MainActivity)
+        // Ambil data dari Intent
         val nim = intent.getStringExtra("NIM") ?: "N/A"
         val nama = intent.getStringExtra("NAMA") ?: "N/A"
         val jurusan = intent.getStringExtra("JURUSAN") ?: "N/A"
@@ -29,94 +29,42 @@ class ProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvProfileAngkatan).text = angkatan
         findViewById<TextView>(R.id.tvProfileDeskripsi).text = deskripsi
 
+        // Tombol menuju History (Explicit Intent)
+        findViewById<Button>(R.id.btnGoToHistory).setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
+
         // Tombol kembali
         findViewById<Button>(R.id.btnBack).setOnClickListener {
             finish()
         }
 
-        // =============================================
-        // IMPLICIT INTENT: Kirim Email ke profil
-        // =============================================
+        // IMPLICIT INTENT: Kirim Email
         findViewById<Button>(R.id.btnSendEmail).setOnClickListener {
-            val emailBody = """
-                Halo $nama,
-                
-                Saya ingin menghubungi Anda terkait appointment kesehatan.
-                
-                Data Anda:
-                NIM     : $nim
-                Jurusan : $jurusan
-                Angkatan: $angkatan
-                
-                Harap balas email ini untuk konfirmasi appointment.
-                
-                Terima kasih.
-            """.trimIndent()
-
+            val emailBody = "Halo $nama,\n\nSaya ingin menghubungi Anda..."
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf("$nim@mail.ugm.ac.id"))
                 putExtra(Intent.EXTRA_SUBJECT, "Healthcare Appointment - $nama")
                 putExtra(Intent.EXTRA_TEXT, emailBody)
             }
-
-            if (emailIntent.resolveActivity(packageManager) != null) {
-                startActivity(emailIntent)
-            } else {
-                // Fallback: gunakan ACTION_SEND jika tidak ada mail client
-                val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
-                    type = "message/rfc822"
-                    putExtra(Intent.EXTRA_SUBJECT, "Healthcare Appointment - $nama")
-                    putExtra(Intent.EXTRA_TEXT, emailBody)
-                }
-                try {
-                    startActivity(Intent.createChooser(fallbackIntent, "Kirim email via..."))
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Tidak ada aplikasi email yang tersedia", Toast.LENGTH_SHORT).show()
-                }
-            }
+            startActivity(Intent.createChooser(emailIntent, "Kirim email via..."))
         }
 
-        // Tombol Share dari Profile
-        // =============================================
-        // IMPLICIT INTENT 1: Share via aplikasi lain
-        // =============================================
+        // IMPLICIT INTENT: Share
         findViewById<Button>(R.id.btnShare).setOnClickListener {
-            val shareText = """
-                🏥 Healthcare Appointment App
-                ━━━━━━━━━━━━━━━━━━
-                👤 Nama   : $nama
-                🎓 NIM    : $nim
-                📚 Jurusan: $jurusan
-                📅 Angkatan: $angkatan
-                
-                📝 Tentang Saya:
-                $deskripsi
-                
-                #HealthcareApp
-            """.trimIndent()
-
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_SUBJECT, "Profil Mahasiswa - $nama")
-                putExtra(Intent.EXTRA_TEXT, shareText)
+                putExtra(Intent.EXTRA_TEXT, "Profil Mahasiswa: $nama ($nim)")
             }
             startActivity(Intent.createChooser(shareIntent, "Bagikan profil via..."))
         }
 
-        // =============================================
-        // IMPLICIT INTENT 2: Buka GitHub di Browser
-        // =============================================
+        // IMPLICIT INTENT: Buka GitHub
         findViewById<Button>(R.id.btnGithub).setOnClickListener {
-            try {
-                val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse(github)
-                    addCategory(Intent.CATEGORY_BROWSABLE)
-                }
-                startActivity(intent)
-            } catch (e: Exception) {
-                Toast.makeText(this, "Gagal membuka browser", Toast.LENGTH_SHORT).show()
-            }
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(github))
+            startActivity(intent)
         }
     }
 }
