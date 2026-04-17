@@ -2910,6 +2910,7 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btnBack
+id btnDoctorList
 id btnEmergency
 id btnFindHospital
 id btnGithub
@@ -3057,6 +3058,7 @@ id legacy
 id line1
 id line3
 id linear
+id listDoctor
 id listMode
 id list_item
 id m3_side_sheet
@@ -3163,6 +3165,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id report_drawn
 id reverseSawtooth
 id right
 id rightToLeft
@@ -3291,11 +3294,17 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tvDescription
+id tvDoctorName
+id tvDoctorSpec
+id tvName
 id tvProfileAngkatan
 id tvProfileDeskripsi
 id tvProfileJurusan
 id tvProfileNama
 id tvProfileNim
+id tvSchedule
+id tvSpecialization
 id unchecked
 id uniform
 id unlabeled
@@ -3425,6 +3434,8 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_doctor_detail
+layout activity_doctor_list
 layout activity_main
 layout activity_profile
 layout custom_dialog
@@ -3443,6 +3454,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout item_doctor
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
