@@ -11,7 +11,7 @@
         android:theme="@style/Theme.HealthcareApp">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LandingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,10 @@
 
         <activity
             android:name=".AppointmentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
             android:exported="false" />
 
         <activity

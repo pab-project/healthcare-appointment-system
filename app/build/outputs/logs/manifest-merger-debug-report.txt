@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-32:12
-INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-32:12
-INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-32:12
-INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-32:12
+ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-36:12
+INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:1-36:12
 MERGED from [com.google.android.material:material:1.8.0] /home/calista/.gradle/caches/transforms-3/3b7b9e878f024eeee186bf4f7966293b/transformed/material-1.8.0/AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/calista/.gradle/caches/transforms-3/3a9c143dc806935c0544adcf7cccee2c/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /home/calista/.gradle/caches/transforms-3/3eaec48e790365cb3ddece1de5aab10f/transformed/jetified-appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
@@ -83,8 +83,8 @@ MERGED from [androidx.print:print:1.0.0] /home/calista/.gradle/caches/transforms
 	xmlns:android
 		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:5:5-31:19
-INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:5:5-31:19
+ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:5:5-35:19
+INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:5:5-35:19
 MERGED from [com.google.android.material:material:1.8.0] /home/calista/.gradle/caches/transforms-3/3b7b9e878f024eeee186bf4f7966293b/transformed/material-1.8.0/AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.8.0] /home/calista/.gradle/caches/transforms-3/3b7b9e878f024eeee186bf4f7966293b/transformed/material-1.8.0/AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /home/calista/.gradle/caches/transforms-3/3a9c143dc806935c0544adcf7cccee2c/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -121,12 +121,12 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/calista/.gradle/cache
 		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:6:9-35
 	android:theme
 		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:11:9-51
-activity#com.example.healthcareapp.MainActivity
+activity#com.example.healthcareapp.LandingActivity
 ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:13:9-20:20
 	android:exported
 		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:15:13-36
 	android:name
-		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:14:13-41
+		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:14:13-44
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:16:13-19:29
 action#android.intent.action.MAIN
@@ -143,14 +143,20 @@ ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest
 		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:24:13-37
 	android:name
 		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:23:13-48
-activity#com.example.healthcareapp.ProfileActivity
-ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:26:9-29:58
-	android:parentActivityName
-		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:29:13-55
+activity#com.example.healthcareapp.MainActivity
+ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:26:9-28:40
 	android:exported
 		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:28:13-37
 	android:name
-		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:27:13-44
+		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:27:13-41
+activity#com.example.healthcareapp.ProfileActivity
+ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:30:9-33:58
+	android:parentActivityName
+		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:33:13-55
+	android:exported
+		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:32:13-37
+	android:name
+		ADDED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:31:13-44
 uses-sdk
 INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml

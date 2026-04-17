@@ -20,7 +20,7 @@
 15-->[androidx.core:core:1.12.0] /home/calista/.gradle/caches/transforms-3/4dde0fce54f6341b6da19770f76a2130/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
 16
 17    <application
-17-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:5:5-31:19
+17-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:5:5-35:19
 18        android:allowBackup="true"
 18-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:6:9-35
 19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -40,8 +40,8 @@
 27-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:11:9-51
 28        <activity
 28-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:13:9-20:20
-29            android:name="com.example.healthcareapp.MainActivity"
-29-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:14:13-41
+29            android:name="com.example.healthcareapp.LandingActivity"
+29-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:14:13-44
 30            android:exported="true" >
 30-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:15:13-36
 31            <intent-filter>
@@ -62,92 +62,98 @@
 39            android:exported="false" />
 39-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:24:13-37
 40        <activity
-40-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:26:9-29:58
-41            android:name="com.example.healthcareapp.ProfileActivity"
-41-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:27:13-44
-42            android:exported="false"
+40-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:26:9-28:40
+41            android:name="com.example.healthcareapp.MainActivity"
+41-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:27:13-41
+42            android:exported="false" />
 42-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:28:13-37
-43            android:parentActivityName="com.example.healthcareapp.MainActivity" />
-43-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:29:13-55
-44        <activity
-44-->[androidx.compose.ui:ui-tooling-android:1.6.2] /home/calista/.gradle/caches/transforms-3/6ca799857d0332eb8b97f7e97a9dd20e/transformed/jetified-ui-tooling-release/AndroidManifest.xml:23:9-25:39
-45            android:name="androidx.compose.ui.tooling.PreviewActivity"
-45-->[androidx.compose.ui:ui-tooling-android:1.6.2] /home/calista/.gradle/caches/transforms-3/6ca799857d0332eb8b97f7e97a9dd20e/transformed/jetified-ui-tooling-release/AndroidManifest.xml:24:13-71
-46            android:exported="true" />
-46-->[androidx.compose.ui:ui-tooling-android:1.6.2] /home/calista/.gradle/caches/transforms-3/6ca799857d0332eb8b97f7e97a9dd20e/transformed/jetified-ui-tooling-release/AndroidManifest.xml:25:13-36
-47
-48        <provider
-48-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
-49            android:name="androidx.startup.InitializationProvider"
-49-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
-50            android:authorities="com.example.healthcareapp.androidx-startup"
-50-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
-51            android:exported="false" >
-51-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
-52            <meta-data
-52-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
-53                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-53-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
-54                android:value="androidx.startup" />
-54-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
+43        <activity
+43-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:30:9-33:58
+44            android:name="com.example.healthcareapp.ProfileActivity"
+44-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:31:13-44
+45            android:exported="false"
+45-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:32:13-37
+46            android:parentActivityName="com.example.healthcareapp.MainActivity" />
+46-->/home/calista/AndroidStudioProjects/pab4/app/src/main/AndroidManifest.xml:33:13-55
+47        <activity
+47-->[androidx.compose.ui:ui-tooling-android:1.6.2] /home/calista/.gradle/caches/transforms-3/6ca799857d0332eb8b97f7e97a9dd20e/transformed/jetified-ui-tooling-release/AndroidManifest.xml:23:9-25:39
+48            android:name="androidx.compose.ui.tooling.PreviewActivity"
+48-->[androidx.compose.ui:ui-tooling-android:1.6.2] /home/calista/.gradle/caches/transforms-3/6ca799857d0332eb8b97f7e97a9dd20e/transformed/jetified-ui-tooling-release/AndroidManifest.xml:24:13-71
+49            android:exported="true" />
+49-->[androidx.compose.ui:ui-tooling-android:1.6.2] /home/calista/.gradle/caches/transforms-3/6ca799857d0332eb8b97f7e97a9dd20e/transformed/jetified-ui-tooling-release/AndroidManifest.xml:25:13-36
+50
+51        <provider
+51-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+52            android:name="androidx.startup.InitializationProvider"
+52-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
+53            android:authorities="com.example.healthcareapp.androidx-startup"
+53-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
+54            android:exported="false" >
+54-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
 55            <meta-data
-55-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/calista/.gradle/caches/transforms-3/04b9e2d6051da9202825d434acaa3ca4/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
-56                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-56-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/calista/.gradle/caches/transforms-3/04b9e2d6051da9202825d434acaa3ca4/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+55-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+56                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+56-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
 57                android:value="androidx.startup" />
-57-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/calista/.gradle/caches/transforms-3/04b9e2d6051da9202825d434acaa3ca4/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+57-->[androidx.emoji2:emoji2:1.3.0] /home/calista/.gradle/caches/transforms-3/accb67d5fa6842fc494107338777a9e8/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
 58            <meta-data
-58-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-59                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-59-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+58-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/calista/.gradle/caches/transforms-3/04b9e2d6051da9202825d434acaa3ca4/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+59                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+59-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/calista/.gradle/caches/transforms-3/04b9e2d6051da9202825d434acaa3ca4/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
 60                android:value="androidx.startup" />
-60-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-61        </provider>
-62
-63        <activity
-63-->[androidx.compose.ui:ui-test-manifest:1.6.2] /home/calista/.gradle/caches/transforms-3/a051099937002d2b6e8a5b0295aa12ee/transformed/jetified-ui-test-manifest-1.6.2/AndroidManifest.xml:23:9-25:39
-64            android:name="androidx.activity.ComponentActivity"
-64-->[androidx.compose.ui:ui-test-manifest:1.6.2] /home/calista/.gradle/caches/transforms-3/a051099937002d2b6e8a5b0295aa12ee/transformed/jetified-ui-test-manifest-1.6.2/AndroidManifest.xml:24:13-63
-65            android:exported="true" />
-65-->[androidx.compose.ui:ui-test-manifest:1.6.2] /home/calista/.gradle/caches/transforms-3/a051099937002d2b6e8a5b0295aa12ee/transformed/jetified-ui-test-manifest-1.6.2/AndroidManifest.xml:25:13-36
-66
-67        <receiver
-67-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-68            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-68-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-69            android:directBootAware="false"
-69-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-70            android:enabled="true"
-70-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-71            android:exported="true"
-71-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-72            android:permission="android.permission.DUMP" >
-72-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-73            <intent-filter>
-73-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-74                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-74-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-74-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-75            </intent-filter>
+60-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/calista/.gradle/caches/transforms-3/04b9e2d6051da9202825d434acaa3ca4/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+61            <meta-data
+61-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+62                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+62-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+63                android:value="androidx.startup" />
+63-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+64        </provider>
+65
+66        <activity
+66-->[androidx.compose.ui:ui-test-manifest:1.6.2] /home/calista/.gradle/caches/transforms-3/a051099937002d2b6e8a5b0295aa12ee/transformed/jetified-ui-test-manifest-1.6.2/AndroidManifest.xml:23:9-25:39
+67            android:name="androidx.activity.ComponentActivity"
+67-->[androidx.compose.ui:ui-test-manifest:1.6.2] /home/calista/.gradle/caches/transforms-3/a051099937002d2b6e8a5b0295aa12ee/transformed/jetified-ui-test-manifest-1.6.2/AndroidManifest.xml:24:13-63
+68            android:exported="true" />
+68-->[androidx.compose.ui:ui-test-manifest:1.6.2] /home/calista/.gradle/caches/transforms-3/a051099937002d2b6e8a5b0295aa12ee/transformed/jetified-ui-test-manifest-1.6.2/AndroidManifest.xml:25:13-36
+69
+70        <receiver
+70-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+71            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+71-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+72            android:directBootAware="false"
+72-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+73            android:enabled="true"
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+74            android:exported="true"
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+75            android:permission="android.permission.DUMP" >
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
 76            <intent-filter>
-76-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-77                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-77-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-77-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+76-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+77                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+77-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+77-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
 78            </intent-filter>
 79            <intent-filter>
-79-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-80                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-80-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-80-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+79-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+80                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
 81            </intent-filter>
 82            <intent-filter>
-82-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-83                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+83                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
 84            </intent-filter>
-85        </receiver>
-86    </application>
-87
-88</manifest>
+85            <intent-filter>
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+86                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/calista/.gradle/caches/transforms-3/a648c10143d2710c515970c288df9792/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+87            </intent-filter>
+88        </receiver>
+89    </application>
+90
+91</manifest>

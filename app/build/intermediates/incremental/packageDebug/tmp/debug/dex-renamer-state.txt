@@ -1,4 +1,4 @@
-#Fri Apr 17 21:59:53 WIB 2026
+#Fri Apr 17 22:43:56 WIB 2026
 base.0=/home/calista/AndroidStudioProjects/pab4/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/calista/AndroidStudioProjects/pab4/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/home/calista/AndroidStudioProjects/pab4/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex
