@@ -9,22 +9,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-// --- Palet Warna ---
-val PrimaryBlue = Color(0xFF1565C0)
-val AppBackground = Color(0xFFF5F7FA)
-val White = Color(0xFFFFFFFF)
-val TextPrimary = Color(0xFF1A1A2E)
-val TextSecondary = Color(0xFF757575)
-val TextHint = Color(0xFFBDBDBD)
-val AccentGreen = Color(0xFF2E7D32)
-val AccentRed = Color(0xFFC62828)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,7 +73,6 @@ fun AppointmentScreen() {
                 readOnly = true,
                 label = { Text("Pilih Dokter") },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = doctorExpanded) },
-                // FIX: menuAnchor kosong biar kompatibel versi lama
                 modifier = Modifier.menuAnchor().fillMaxWidth(),
                 colors = textFieldColors,
                 shape = RoundedCornerShape(12.dp)
@@ -92,7 +80,6 @@ fun AppointmentScreen() {
             ExposedDropdownMenu(
                 expanded = doctorExpanded,
                 onDismissRequest = { doctorExpanded = false }
-                // containerColor dihapus karena nggak ada di versi lama
             ) {
                 doctorOptions.forEach { doc ->
                     DropdownMenuItem(
@@ -140,7 +127,6 @@ fun AppointmentScreen() {
                     readOnly = true,
                     label = { Text("Jam") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = timeExpanded) },
-                    // FIX: menuAnchor kosong
                     modifier = Modifier.menuAnchor().fillMaxWidth(),
                     colors = textFieldColors,
                     shape = RoundedCornerShape(12.dp)

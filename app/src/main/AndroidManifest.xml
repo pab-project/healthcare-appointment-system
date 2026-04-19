@@ -9,25 +9,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthcareApp">
+
+        <!-- Login Activity (Launcher) -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- Profile Activity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <!-- History Activity -->
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <!-- Other Activities -->
         <activity
             android:name=".DoctorDetailActivity"
             android:exported="false" />
         <activity
             android:name=".DoctorListActivity"
-            android:exported="false" /> <!-- Main Activity -->
+            android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".AppointmentActivity"
+            android:exported="false" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- Profile Activity -->
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

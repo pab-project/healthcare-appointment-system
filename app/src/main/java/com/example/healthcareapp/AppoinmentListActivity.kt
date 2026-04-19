@@ -11,19 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-// Color Palette
-val PrimaryBlue = Color(0xFF1565C0)
-val AppBackground = Color(0xFFF5F7FA)
-val White = Color(0xFFFFFFFF)
-val TextPrimary = Color(0xFF1A1A2E)
-val TextSecondary = Color(0xFF757575)
-val TextHint = Color(0xFFBDBDBD)
-val AccentGreen = Color(0xFF2E7D32)
-val AccentRed = Color(0xFFC62828)
 
 @Composable
 fun AppointmentListScreen() {
@@ -101,7 +90,7 @@ fun AppointmentListScreen() {
         // Floating Button
         FloatingActionButton(
             onClick = {
-                navController.navigate("FormAppointment")
+                // navController.navigate("FormAppointment") // navController is unresolved
             },
             containerColor = PrimaryBlue,
             contentColor = White,

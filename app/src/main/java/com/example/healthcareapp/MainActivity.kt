@@ -4,8 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -24,6 +22,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AppointmentActivity::class.java)
             startActivity(intent)
         }
+
+        // Tombol buat buka Jadwal Dokter
+        findViewById<Button>(R.id.btnViewAllDoctors).setOnClickListener {
+            val intent = Intent(this, DoctorListActivity::class.java)
+            startActivity(intent)
+        }
+
         // =============================================
         // EXPLICIT INTENT: Pindah ke ProfileActivity
         // =============================================
@@ -40,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 "https://github.com/IMars-kun"
             )
         }
-    1
         // =========================
         // MEMBER 2
         // =========================
@@ -95,14 +99,6 @@ class MainActivity : AppCompatActivity() {
                 "Fokus ke cybersecurity.",
                 "https://github.com/faleryn"
             )
-        }
-
-        // =============================================
-        // EXPLICIT INTENT: Buka DoctorListActivity
-        // =============================================
-        findViewById<Button>(R.id.btnDoctorList).setOnClickListener {
-            val intent = Intent(this, DoctorListActivity::class.java)
-            startActivity(intent)
         }
 
         // =============================================
