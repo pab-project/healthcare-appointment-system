@@ -19,6 +19,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
+        // Tombol buat buka form Janji Temu (Appointment)
+        findViewById<Button>(R.id.btnMakeAppointment).setOnClickListener {
+            val intent = Intent(this, AppointmentActivity::class.java)
+            startActivity(intent)
+        }
         // =============================================
         // EXPLICIT INTENT: Pindah ke ProfileActivity
         // =============================================
@@ -35,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 "https://github.com/IMars-kun"
             )
         }
-
+    1
         // =========================
         // MEMBER 2
         // =========================

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.healthcareapp-mergeDebugResources-26:/values-v24/values-v24.xml",
+            "outputFile": "com.example.healthcareapp-mergeDebugResources-56:/values-v24/values-v24.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Nitro\\.gradle\\caches\\transforms-3\\42349fcab7a5a6a21b6eefeb34a9888a\\transformed\\appcompat-1.6.1\\res\\values-v24\\values-v24.xml",

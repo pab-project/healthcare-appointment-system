@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.healthcareapp-mergeDebugResources-26:/values-small-v4/values-small-v4.xml",
+            "outputFile": "com.example.healthcareapp-mergeDebugResources-56:/values-small-v4/values-small-v4.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Nitro\\.gradle\\caches\\transforms-3\\3b7b9e878f024eeee186bf4f7966293b\\transformed\\material-1.8.0\\res\\values-small-v4\\values-small-v4.xml",
