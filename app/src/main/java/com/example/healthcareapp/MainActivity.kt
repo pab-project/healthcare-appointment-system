@@ -98,6 +98,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         // =============================================
+        // EXPLICIT INTENT: Buka DoctorListActivity
+        // =============================================
+        findViewById<Button>(R.id.btnDoctorList).setOnClickListener {
+            val intent = Intent(this, DoctorListActivity::class.java)
+            startActivity(intent)
+        }
+
+        // =============================================
         // IMPLICIT INTENT 3: Buka Maps untuk lokasi RS
         // =============================================
         findViewById<Button>(R.id.btnFindHospital).setOnClickListener {
