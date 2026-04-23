@@ -38,13 +38,11 @@ android {
         jvmTarget = '17'
     }
 
-    // --- TAMBAHKAN BLOK INI ---
     buildFeatures {
         compose true
     }
 
     composeOptions {
-        // GANTI DARI '1.5.1' KE '1.5.8'
         kotlinCompilerExtensionVersion '1.5.14'
     }
 
@@ -61,8 +59,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    // --- TAMBAHKAN LIBRARY COMPOSE SAKTI INI ---
-    def composeBom = platform('androidx.compose:compose-bom:2024.02.01')
+    // Update BOM ke versi yang lebih baru (mendukung Foundation 1.7+)
+    def composeBom = platform('androidx.compose:compose-bom:2024.09.03')
     implementation composeBom
     androidTestImplementation composeBom
 

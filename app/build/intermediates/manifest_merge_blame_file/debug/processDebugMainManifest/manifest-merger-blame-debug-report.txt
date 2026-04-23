@@ -9,146 +9,146 @@
 9        android:targetSdkVersion="36" />
 10
 11    <permission
-11-->[androidx.core:core:1.16.0] /home/imarskun/.gradle/caches/8.11.1/transforms/61c432565cf9c5171e398b3a633b689c/transformed/core-1.16.0/AndroidManifest.xml:22:5-24:47
+11-->[androidx.core:core:1.16.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\61c432565cf9c5171e398b3a633b689c\transformed\core-1.16.0\AndroidManifest.xml:22:5-24:47
 12        android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-12-->[androidx.core:core:1.16.0] /home/imarskun/.gradle/caches/8.11.1/transforms/61c432565cf9c5171e398b3a633b689c/transformed/core-1.16.0/AndroidManifest.xml:23:9-81
+12-->[androidx.core:core:1.16.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\61c432565cf9c5171e398b3a633b689c\transformed\core-1.16.0\AndroidManifest.xml:23:9-81
 13        android:protectionLevel="signature" />
-13-->[androidx.core:core:1.16.0] /home/imarskun/.gradle/caches/8.11.1/transforms/61c432565cf9c5171e398b3a633b689c/transformed/core-1.16.0/AndroidManifest.xml:24:9-44
+13-->[androidx.core:core:1.16.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\61c432565cf9c5171e398b3a633b689c\transformed\core-1.16.0\AndroidManifest.xml:24:9-44
 14
 15    <uses-permission android:name="com.example.healthcareapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-15-->[androidx.core:core:1.16.0] /home/imarskun/.gradle/caches/8.11.1/transforms/61c432565cf9c5171e398b3a633b689c/transformed/core-1.16.0/AndroidManifest.xml:26:5-97
-15-->[androidx.core:core:1.16.0] /home/imarskun/.gradle/caches/8.11.1/transforms/61c432565cf9c5171e398b3a633b689c/transformed/core-1.16.0/AndroidManifest.xml:26:22-94
+15-->[androidx.core:core:1.16.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\61c432565cf9c5171e398b3a633b689c\transformed\core-1.16.0\AndroidManifest.xml:26:5-97
+15-->[androidx.core:core:1.16.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\61c432565cf9c5171e398b3a633b689c\transformed\core-1.16.0\AndroidManifest.xml:26:22-94
 16
 17    <application
-17-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:5:5-23:19
+17-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:5:5-23:19
 18        android:allowBackup="true"
-18-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:6:9-35
+18-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:6:9-35
 19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-19-->[androidx.core:core:1.16.0] /home/imarskun/.gradle/caches/8.11.1/transforms/61c432565cf9c5171e398b3a633b689c/transformed/core-1.16.0/AndroidManifest.xml:28:18-86
+19-->[androidx.core:core:1.16.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\61c432565cf9c5171e398b3a633b689c\transformed\core-1.16.0\AndroidManifest.xml:28:18-86
 20        android:debuggable="true"
 21        android:extractNativeLibs="false"
 22        android:icon="@mipmap/ic_launcher"
-22-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:7:9-43
+22-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:7:9-43
 23        android:label="@string/app_name"
-23-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:8:9-41
+23-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:8:9-41
 24        android:roundIcon="@mipmap/ic_launcher_round"
-24-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:9:9-54
+24-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:9:9-54
 25        android:supportsRtl="true"
-25-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:10:9-35
+25-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:10:9-35
 26        android:testOnly="true"
 27        android:theme="@style/Theme.HealthcareApp" >
-27-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:11:9-51
+27-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:11:9-51
 28
 29        <!-- Main Activity (Single Activity) -->
 30        <activity
-30-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:14:9-21:20
+30-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:14:9-21:20
 31            android:name="com.example.healthcareapp.MainActivity"
-31-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:15:13-41
+31-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:15:13-41
 32            android:exported="true" >
-32-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:16:13-36
+32-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:16:13-36
 33            <intent-filter>
-33-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:17:13-20:29
+33-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:17:13-20:29
 34                <action android:name="android.intent.action.MAIN" />
-34-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:18:17-69
-34-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:18:25-66
+34-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:18:17-69
+34-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:18:25-66
 35
 36                <category android:name="android.intent.category.LAUNCHER" />
-36-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:19:17-77
-36-->/home/imarskun/Documents/PAB/github/pab/app/src/main/AndroidManifest.xml:19:27-74
+36-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:19:17-77
+36-->D:\CODING SAMPE GILA\SEMESTER 4\PAB\HealthCareApp\pab\app\src\main\AndroidManifest.xml:19:27-74
 37            </intent-filter>
 38        </activity>
 39        <activity
-39-->[androidx.compose.ui:ui-tooling-android:1.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/b7bd4f771f3f8bcd37037c90df3aef37/transformed/ui-tooling/AndroidManifest.xml:23:9-25:39
+39-->[androidx.compose.ui:ui-tooling-android:1.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\b7bd4f771f3f8bcd37037c90df3aef37\transformed\ui-tooling\AndroidManifest.xml:23:9-25:39
 40            android:name="androidx.compose.ui.tooling.PreviewActivity"
-40-->[androidx.compose.ui:ui-tooling-android:1.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/b7bd4f771f3f8bcd37037c90df3aef37/transformed/ui-tooling/AndroidManifest.xml:24:13-71
+40-->[androidx.compose.ui:ui-tooling-android:1.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\b7bd4f771f3f8bcd37037c90df3aef37\transformed\ui-tooling\AndroidManifest.xml:24:13-71
 41            android:exported="true" />
-41-->[androidx.compose.ui:ui-tooling-android:1.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/b7bd4f771f3f8bcd37037c90df3aef37/transformed/ui-tooling/AndroidManifest.xml:25:13-36
+41-->[androidx.compose.ui:ui-tooling-android:1.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\b7bd4f771f3f8bcd37037c90df3aef37\transformed\ui-tooling\AndroidManifest.xml:25:13-36
 42
 43        <provider
-43-->[androidx.emoji2:emoji2:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/183ecb6669b7687244be12f98330351e/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
+43-->[androidx.emoji2:emoji2:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\183ecb6669b7687244be12f98330351e\transformed\emoji2-1.4.0\AndroidManifest.xml:24:9-32:20
 44            android:name="androidx.startup.InitializationProvider"
-44-->[androidx.emoji2:emoji2:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/183ecb6669b7687244be12f98330351e/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
+44-->[androidx.emoji2:emoji2:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\183ecb6669b7687244be12f98330351e\transformed\emoji2-1.4.0\AndroidManifest.xml:25:13-67
 45            android:authorities="com.example.healthcareapp.androidx-startup"
-45-->[androidx.emoji2:emoji2:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/183ecb6669b7687244be12f98330351e/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
+45-->[androidx.emoji2:emoji2:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\183ecb6669b7687244be12f98330351e\transformed\emoji2-1.4.0\AndroidManifest.xml:26:13-68
 46            android:exported="false" >
-46-->[androidx.emoji2:emoji2:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/183ecb6669b7687244be12f98330351e/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
+46-->[androidx.emoji2:emoji2:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\183ecb6669b7687244be12f98330351e\transformed\emoji2-1.4.0\AndroidManifest.xml:27:13-37
 47            <meta-data
-47-->[androidx.emoji2:emoji2:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/183ecb6669b7687244be12f98330351e/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
+47-->[androidx.emoji2:emoji2:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\183ecb6669b7687244be12f98330351e\transformed\emoji2-1.4.0\AndroidManifest.xml:29:13-31:52
 48                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-48-->[androidx.emoji2:emoji2:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/183ecb6669b7687244be12f98330351e/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
+48-->[androidx.emoji2:emoji2:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\183ecb6669b7687244be12f98330351e\transformed\emoji2-1.4.0\AndroidManifest.xml:30:17-75
 49                android:value="androidx.startup" />
-49-->[androidx.emoji2:emoji2:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/183ecb6669b7687244be12f98330351e/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
+49-->[androidx.emoji2:emoji2:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\183ecb6669b7687244be12f98330351e\transformed\emoji2-1.4.0\AndroidManifest.xml:31:17-49
 50            <meta-data
-50-->[androidx.lifecycle:lifecycle-process:2.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/69de1a0d59814b159050fb53d89569db/transformed/lifecycle-process-2.10.0/AndroidManifest.xml:29:13-31:52
+50-->[androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\69de1a0d59814b159050fb53d89569db\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:29:13-31:52
 51                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-51-->[androidx.lifecycle:lifecycle-process:2.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/69de1a0d59814b159050fb53d89569db/transformed/lifecycle-process-2.10.0/AndroidManifest.xml:30:17-78
+51-->[androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\69de1a0d59814b159050fb53d89569db\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:30:17-78
 52                android:value="androidx.startup" />
-52-->[androidx.lifecycle:lifecycle-process:2.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/69de1a0d59814b159050fb53d89569db/transformed/lifecycle-process-2.10.0/AndroidManifest.xml:31:17-49
+52-->[androidx.lifecycle:lifecycle-process:2.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\69de1a0d59814b159050fb53d89569db\transformed\lifecycle-process-2.10.0\AndroidManifest.xml:31:17-49
 53            <meta-data
-53-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+53-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
 54                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-54-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+54-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
 55                android:value="androidx.startup" />
-55-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+55-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
 56        </provider>
 57
 58        <uses-library
-58-->[androidx.window:window:1.5.0] /home/imarskun/.gradle/caches/8.11.1/transforms/837611324b30c90449953b39d04944c9/transformed/window-1.5.0/AndroidManifest.xml:23:9-25:40
+58-->[androidx.window:window:1.5.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\837611324b30c90449953b39d04944c9\transformed\window-1.5.0\AndroidManifest.xml:23:9-25:40
 59            android:name="androidx.window.extensions"
-59-->[androidx.window:window:1.5.0] /home/imarskun/.gradle/caches/8.11.1/transforms/837611324b30c90449953b39d04944c9/transformed/window-1.5.0/AndroidManifest.xml:24:13-54
+59-->[androidx.window:window:1.5.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\837611324b30c90449953b39d04944c9\transformed\window-1.5.0\AndroidManifest.xml:24:13-54
 60            android:required="false" />
-60-->[androidx.window:window:1.5.0] /home/imarskun/.gradle/caches/8.11.1/transforms/837611324b30c90449953b39d04944c9/transformed/window-1.5.0/AndroidManifest.xml:25:13-37
+60-->[androidx.window:window:1.5.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\837611324b30c90449953b39d04944c9\transformed\window-1.5.0\AndroidManifest.xml:25:13-37
 61        <uses-library
-61-->[androidx.window:window:1.5.0] /home/imarskun/.gradle/caches/8.11.1/transforms/837611324b30c90449953b39d04944c9/transformed/window-1.5.0/AndroidManifest.xml:26:9-28:40
+61-->[androidx.window:window:1.5.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\837611324b30c90449953b39d04944c9\transformed\window-1.5.0\AndroidManifest.xml:26:9-28:40
 62            android:name="androidx.window.sidecar"
-62-->[androidx.window:window:1.5.0] /home/imarskun/.gradle/caches/8.11.1/transforms/837611324b30c90449953b39d04944c9/transformed/window-1.5.0/AndroidManifest.xml:27:13-51
+62-->[androidx.window:window:1.5.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\837611324b30c90449953b39d04944c9\transformed\window-1.5.0\AndroidManifest.xml:27:13-51
 63            android:required="false" />
-63-->[androidx.window:window:1.5.0] /home/imarskun/.gradle/caches/8.11.1/transforms/837611324b30c90449953b39d04944c9/transformed/window-1.5.0/AndroidManifest.xml:28:13-37
+63-->[androidx.window:window:1.5.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\837611324b30c90449953b39d04944c9\transformed\window-1.5.0\AndroidManifest.xml:28:13-37
 64
 65        <activity
-65-->[androidx.compose.ui:ui-test-manifest:1.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/38ba94392b7b8775c40ffff16b7db9d0/transformed/ui-test-manifest-1.10.0/AndroidManifest.xml:23:9-26:79
+65-->[androidx.compose.ui:ui-test-manifest:1.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\38ba94392b7b8775c40ffff16b7db9d0\transformed\ui-test-manifest-1.10.0\AndroidManifest.xml:23:9-26:79
 66            android:name="androidx.activity.ComponentActivity"
-66-->[androidx.compose.ui:ui-test-manifest:1.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/38ba94392b7b8775c40ffff16b7db9d0/transformed/ui-test-manifest-1.10.0/AndroidManifest.xml:24:13-63
+66-->[androidx.compose.ui:ui-test-manifest:1.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\38ba94392b7b8775c40ffff16b7db9d0\transformed\ui-test-manifest-1.10.0\AndroidManifest.xml:24:13-63
 67            android:exported="true"
-67-->[androidx.compose.ui:ui-test-manifest:1.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/38ba94392b7b8775c40ffff16b7db9d0/transformed/ui-test-manifest-1.10.0/AndroidManifest.xml:25:13-36
+67-->[androidx.compose.ui:ui-test-manifest:1.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\38ba94392b7b8775c40ffff16b7db9d0\transformed\ui-test-manifest-1.10.0\AndroidManifest.xml:25:13-36
 68            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
-68-->[androidx.compose.ui:ui-test-manifest:1.10.0] /home/imarskun/.gradle/caches/8.11.1/transforms/38ba94392b7b8775c40ffff16b7db9d0/transformed/ui-test-manifest-1.10.0/AndroidManifest.xml:26:13-76
+68-->[androidx.compose.ui:ui-test-manifest:1.10.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\38ba94392b7b8775c40ffff16b7db9d0\transformed\ui-test-manifest-1.10.0\AndroidManifest.xml:26:13-76
 69
 70        <receiver
-70-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+70-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
 71            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-71-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+71-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
 72            android:directBootAware="false"
-72-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+72-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
 73            android:enabled="true"
-73-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+73-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
 74            android:exported="true"
-74-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+74-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
 75            android:permission="android.permission.DUMP" >
-75-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+75-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
 76            <intent-filter>
-76-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+76-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
 77                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-77-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
-77-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+77-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
+77-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
 78            </intent-filter>
 79            <intent-filter>
-79-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
 80                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-80-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
-80-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+80-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
+80-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
 81            </intent-filter>
 82            <intent-filter>
-82-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+82-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
 83                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-83-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
-83-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+83-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
+83-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
 84            </intent-filter>
 85            <intent-filter>
-85-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+85-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
 86                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-86-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
-86-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/imarskun/.gradle/caches/8.11.1/transforms/9445b9d38f011dd1acc37a94c1537a40/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\Nitro\.gradle\caches\8.11.1\transforms\9445b9d38f011dd1acc37a94c1537a40\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
 87            </intent-filter>
 88        </receiver>
 89    </application>

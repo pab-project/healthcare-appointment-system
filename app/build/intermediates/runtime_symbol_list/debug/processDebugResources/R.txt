@@ -3409,6 +3409,7 @@ int integer m3_sys_motion_duration_short1 0x7f09001a
 int integer m3_sys_motion_duration_short2 0x7f09001b
 int integer m3_sys_motion_duration_short3 0x7f09001c
 int integer m3_sys_motion_duration_short4 0x7f09001d
+int integer m3c_window_layout_in_display_cutout_mode 0x7f09003c
 int integer material_motion_duration_long_1 0x7f09001e
 int integer material_motion_duration_long_2 0x7f09001f
 int integer material_motion_duration_medium_1 0x7f090020
@@ -3681,6 +3682,7 @@ int string m3c_date_range_picker_title 0x7f0f006e
 int string m3c_dialog 0x7f0f006f
 int string m3c_dropdown_menu_collapsed 0x7f0f0070
 int string m3c_dropdown_menu_expanded 0x7f0f0071
+int string m3c_dropdown_menu_toggle 0x7f0f00f1
 int string m3c_search_bar_search 0x7f0f0072
 int string m3c_snackbar_dismiss 0x7f0f0073
 int string m3c_suggestions_available 0x7f0f0074
@@ -4093,6 +4095,8 @@ int style CardView 0x7f100119
 int style CardView_Dark 0x7f10011a
 int style CardView_Light 0x7f10011b
 int style DialogWindowTheme 0x7f10011c
+int style EdgeToEdgeFloatingDialogTheme 0x7f100448
+int style EdgeToEdgeFloatingDialogWindowTheme 0x7f100449
 int style FloatingDialogWindowTheme 0x7f10011d
 int style MaterialAlertDialog_Material3 0x7f10011e
 int style MaterialAlertDialog_Material3_Animation 0x7f10011f

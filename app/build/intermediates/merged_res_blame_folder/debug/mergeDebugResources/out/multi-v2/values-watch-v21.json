@@ -4,7 +4,7 @@
             "outputFile": "com.example.healthcareapp-mergeDebugResources-53:/values-watch-v21/values-watch-v21.xml",
             "map": [
                 {
-                    "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/0192cc4e3ed55649b4d1eb1de9ad935c/transformed/appcompat-1.6.1/res/values-watch-v21/values-watch-v21.xml",
+                    "source": "C:\\Users\\Nitro\\.gradle\\caches\\8.11.1\\transforms\\0192cc4e3ed55649b4d1eb1de9ad935c\\transformed\\appcompat-1.6.1\\res\\values-watch-v21\\values-watch-v21.xml",
                     "from": {
                         "startLines": "2,6,10",
                         "startColumns": "4,4,4",
