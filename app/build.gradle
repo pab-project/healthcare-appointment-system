@@ -1,16 +1,18 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
     namespace 'com.example.healthcareapp'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.example.healthcareapp"
         minSdk 24
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
@@ -43,7 +45,7 @@ android {
 
     composeOptions {
         // GANTI DARI '1.5.1' KE '1.5.8'
-        kotlinCompilerExtensionVersion '1.5.8'
+        kotlinCompilerExtensionVersion '1.5.14'
     }
 
     packagingOptions {
@@ -71,6 +73,11 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended"
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+
+    // Navigation 3
+    implementation "androidx.navigation3:navigation3-runtime-android:1.1.1"
+    implementation "androidx.navigation3:navigation3-ui-android:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
 
 
     // Testing

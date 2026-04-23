@@ -17,7 +17,10 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppointmentScreen() {
+fun FormAppointment(
+    onBackClick: () -> Unit,
+    onConfirmClick: (String, String, String, String, String) -> Unit
+) {
     var patientName by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
     var symptoms by remember { mutableStateOf("") }
@@ -30,7 +33,7 @@ fun AppointmentScreen() {
     var showSuccessDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
 
-    val doctorOptions = listOf("dr. Budi (Poli Umum)", "dr. Citra (Poli Gigi)", "dr. Andi (Penyakit Dalam)", "dr. Diana (Poli Anak)")
+    val doctorOptions = DataManager.doctors.map { "${it.name} (${it.specialization})" }
     val timeOptions = listOf("08:00 - 09:00", "09:30 - 10:30", "11:00 - 12:00", "13:30 - 14:30", "15:00 - 16:00")
 
     val textFieldColors = OutlinedTextFieldDefaults.colors(
@@ -49,7 +52,12 @@ fun AppointmentScreen() {
             .padding(24.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        Text("Buat Janji Temu", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text("Buat Janji Temu", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+            IconButton(onClick = onBackClick) {
+                Text("✕", fontSize = 20.sp, color = TextSecondary)
+            }
+        }
         Text("Silakan isi data lengkap di bawah ini.", fontSize = 14.sp, color = TextSecondary, modifier = Modifier.padding(bottom = 24.dp))
 
         OutlinedTextField(
@@ -168,6 +176,16 @@ fun AppointmentScreen() {
         ) {
             Text("Konfirmasi Jadwal", fontWeight = FontWeight.Bold, color = White)
         }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        OutlinedButton(
+            onClick = onBackClick,
+            modifier = Modifier.fillMaxWidth().height(56.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Text("Batal", color = TextSecondary)
+        }
     }
 
     if (showErrorDialog) {
@@ -191,8 +209,10 @@ fun AppointmentScreen() {
             confirmButton = {
                 TextButton(
                     onClick = {
+                        onConfirmClick(patientName, selectedDoctor, date, selectedTime, symptoms)
                         showSuccessDialog = false
                         patientName = ""; date = ""; symptoms = ""; selectedDoctor = ""; selectedTime = ""
+                        onBackClick() // Auto back after success
                     }
                 ) {
                     Text("OK", color = PrimaryBlue, fontWeight = FontWeight.Bold)
@@ -204,6 +224,6 @@ fun AppointmentScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun AppointmentScreenPreview() {
-    AppointmentScreen()
+fun FormAppointmentPreview() {
+    FormAppointment(onBackClick = {}, onConfirmClick = { _, _, _, _, _ -> })
 }

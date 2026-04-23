@@ -10,15 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-data class HistoryItem(
-    val doctorName: String,
-    val service: String,
-    val date: String,
-    val status: String
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,9 +23,9 @@ fun HistoryScreen(
 ) {
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = { Text("Riwayat Pemeriksaan", color = Color.White, fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF1565C0)),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1565C0)),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Text("←", color = Color.White, fontSize = 24.sp)
@@ -108,5 +103,40 @@ fun HistoryCard(item: HistoryItem) {
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun HistoryScreenPreview() {
+    val dummyData = listOf(
+        HistoryItem(
+            id = 1,
+            doctorName = "Dr. Andi Wijaya",
+            service = "Pemeriksaan Umum",
+            date = "20 April 2026",
+            status = "Selesai"
+        ),
+        HistoryItem(
+            id = 2,
+            doctorName = "Dr. Siti Rahma",
+            service = "Konsultasi Gigi",
+            date = "18 April 2026",
+            status = "Selesai"
+        ),
+        HistoryItem(
+            id = 3,
+            doctorName = "Dr. Budi Santoso",
+            service = "Cek Kesehatan",
+            date = "15 April 2026",
+            status = "Selesai"
+        )
+    )
+
+    MaterialTheme {
+        HistoryScreen(
+            items = dummyData,
+            onBackClick = {}
+        )
     }
 }

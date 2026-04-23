@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -21,9 +22,11 @@ fun DoctorDetailScreen(
 ) {
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
+
                 title = { Text("Detail Dokter", color = Color.White, fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF1565C0)),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1565C0)),
+
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Text("←", color = Color.White, fontSize = 24.sp)
@@ -111,5 +114,31 @@ fun DoctorDetailScreen(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun DoctorDetailScreenPreview() {
+
+    val dummyDoctor = Doctor(
+        id = 1,
+        name = "Dr. Andi Wijaya",
+        specialization = "Dokter Umum",
+        description = "Dokter yang berpengalaman dalam menangani berbagai keluhan kesehatan umum dengan pendekatan profesional dan ramah pasien.",
+        schedule = listOf(
+            "Senin 08:00 - 12:00",
+            "Selasa 10:00 - 14:00",
+            "Rabu 08:00 - 12:00",
+            "Kamis 12:00 - 16:00",
+            "Jumat 08:00 - 11:00"
+        )
+    )
+
+    MaterialTheme {
+        DoctorDetailScreen(
+            doctor = dummyDoctor,
+            onBackClick = {}
+        )
     }
 }
