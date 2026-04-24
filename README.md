@@ -13,5 +13,5 @@
 
 ## Progress Week-5
 
-- [Video demo progress week 5](https://youtu.be)
+- [Video demo progress week 5](https://youtu.be/X610OIUJmAk)
 - [Laporan progress week 5](https://drive.google.com/drive/folders/1-X0LUJB-H6oRuCVxwLWYPv0v9Y1rV5bZ?usp=sharing)
