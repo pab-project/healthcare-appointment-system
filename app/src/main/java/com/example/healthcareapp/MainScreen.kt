@@ -12,7 +12,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.ui.Alignment
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     isLoggedIn: Boolean,
@@ -24,6 +29,8 @@ fun MainScreen(
     onFindHospitalClick: () -> Unit,
     onEmergencyCallClick: () -> Unit
 ) {
+    var showEmergencySheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,7 +83,7 @@ fun MainScreen(
         MainCard("🏥 Healthcare Feature") {
 
             FeatureButton("🗺️ Cari Rumah Sakit", onFindHospitalClick)
-            FeatureButton("🚨 Emergency Call", onEmergencyCallClick)
+            FeatureButton("🚨 Emergency Call", onClick = { showEmergencySheet = true })
 
             Divider(modifier = Modifier.padding(vertical = 8.dp))
 
@@ -85,6 +92,47 @@ fun MainScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    if (showEmergencySheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showEmergencySheet = false },
+            sheetState = sheetState
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text("🚨 Panggilan Darurat", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(16.dp))
+                EmergencyContactItem("🚑 Ambulans", "118")
+                EmergencyContactItem("🚓 Polisi", "110")
+                EmergencyContactItem("🚒 Pemadam Kebakaran", "113")
+                Spacer(modifier = Modifier.height(48.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun EmergencyContactItem(title: String, number: String) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEBEE))
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(title, fontWeight = FontWeight.SemiBold, color = Color(0xFFD32F2F))
+            Text(number, fontWeight = FontWeight.Bold, color = Color(0xFFD32F2F), fontSize = 18.sp)
+        }
     }
 }
 
