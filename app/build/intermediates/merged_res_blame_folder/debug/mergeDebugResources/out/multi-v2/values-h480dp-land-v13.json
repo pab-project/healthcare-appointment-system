@@ -4,7 +4,7 @@
             "outputFile": "com.example.healthcareapp-mergeDebugResources-53:/values-h480dp-land-v13/values-h480dp-land-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Nitro\\.gradle\\caches\\8.11.1\\transforms\\9980ae5bbcfcd04d0e71cdd185891ce2\\transformed\\material-1.8.0\\res\\values-h480dp-land-v13\\values-h480dp-land-v13.xml",
+                    "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/9980ae5bbcfcd04d0e71cdd185891ce2/transformed/material-1.8.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

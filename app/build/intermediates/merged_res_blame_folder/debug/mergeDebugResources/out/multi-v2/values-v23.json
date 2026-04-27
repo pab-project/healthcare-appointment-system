@@ -4,7 +4,7 @@
             "outputFile": "com.example.healthcareapp-mergeDebugResources-53:/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Nitro\\.gradle\\caches\\8.11.1\\transforms\\0192cc4e3ed55649b4d1eb1de9ad935c\\transformed\\appcompat-1.6.1\\res\\values-v23\\values-v23.xml",
+                    "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/0192cc4e3ed55649b4d1eb1de9ad935c/transformed/appcompat-1.6.1/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -15,7 +15,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Nitro\\.gradle\\caches\\8.11.1\\transforms\\fd334aafb70a3de3bb3f1e71ba497d15\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
+                    "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/fd334aafb70a3de3bb3f1e71ba497d15/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -34,7 +34,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Nitro\\.gradle\\caches\\8.11.1\\transforms\\9980ae5bbcfcd04d0e71cdd185891ce2\\transformed\\material-1.8.0\\res\\values-v23\\values-v23.xml",
+                    "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/9980ae5bbcfcd04d0e71cdd185891ce2/transformed/material-1.8.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,5,8,13,17,20,23,26,31,34,38",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4",

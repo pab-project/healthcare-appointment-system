@@ -4,7 +4,7 @@
             "outputFile": "com.example.healthcareapp-mergeDebugResources-53:/values-h320dp-port-v13/values-h320dp-port-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Nitro\\.gradle\\caches\\8.11.1\\transforms\\9980ae5bbcfcd04d0e71cdd185891ce2\\transformed\\material-1.8.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
+                    "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/9980ae5bbcfcd04d0e71cdd185891ce2/transformed/material-1.8.0/res/values-h320dp-port-v13/values-h320dp-port-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
