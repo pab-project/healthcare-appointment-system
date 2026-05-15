@@ -15,3 +15,8 @@
 
 - [Video demo progress week 5](https://youtu.be/X610OIUJmAk)
 - [Laporan progress week 5](https://drive.google.com/drive/folders/1-X0LUJB-H6oRuCVxwLWYPv0v9Y1rV5bZ?usp=sharing)
+
+## Responsi-1
+
+- [Video demo responsi 1](https://youtu.be/i1GGfnwnRlE)
+- [Laporan responsi 1](https://drive.google.com/file/d/1q2IaAX2dQTNzGvgF4YMkBtZAQyo1VlTg/view?usp=drive_link)
