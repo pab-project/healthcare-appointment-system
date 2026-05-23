@@ -27,4 +27,9 @@ sealed class Routes {
     data class HistoryDetail(val id: Int) : Routes()
     @Serializable
     data object Profile : Routes()
+
+    @Serializable
+    data object AdminDashboard : Routes()
+    @Serializable
+    data object DoctorDashboard : Routes()
 }

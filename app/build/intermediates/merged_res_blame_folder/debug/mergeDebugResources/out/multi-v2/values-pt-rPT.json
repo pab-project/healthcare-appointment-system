@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.healthcareapp-mergeDebugResources-53:/values-pt-rPT/values-pt-rPT.xml",
+            "outputFile": "com.example.healthcareapp-mergeDebugResources-56:/values-pt-rPT/values-pt-rPT.xml",
             "map": [
                 {
                     "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/5bc748cb3dbacf97c84fd2bfab87c5d4/transformed/ui/res/values-pt-rPT/values-pt-rPT.xml",

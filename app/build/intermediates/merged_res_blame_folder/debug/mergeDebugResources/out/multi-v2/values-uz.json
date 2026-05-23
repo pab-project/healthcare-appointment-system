@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.healthcareapp-mergeDebugResources-53:/values-uz/values-uz.xml",
+            "outputFile": "com.example.healthcareapp-mergeDebugResources-56:/values-uz/values-uz.xml",
             "map": [
                 {
                     "source": "/home/imarskun/.gradle/caches/8.11.1/transforms/61c432565cf9c5171e398b3a633b689c/transformed/core-1.16.0/res/values-uz/values-uz.xml",

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -15,9 +16,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 
+/**
+ * ProfileScreen - Dimodifikasi untuk menampilkan role user
+ * dan logout yang menghapus session dari DataStore.
+ */
 @Composable
 fun ProfileScreen(
     patient: Patient,
+    userRole: UserRole = UserRole.PATIENT,
     onEditProfileClick: () -> Unit = {},
     onMedicalRecordClick: () -> Unit = {},
     onAppointmentClick: () -> Unit = {},
@@ -50,6 +56,26 @@ fun ProfileScreen(
 
             Text(patient.name, color = Color.White, fontWeight = FontWeight.Bold)
             Text(patient.email, color = Color.White.copy(0.7f))
+
+            // Badge role
+            Spacer(modifier = Modifier.height(8.dp))
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = Color.White.copy(alpha = 0.2f)
+            ) {
+                val roleText = when (userRole) {
+                    UserRole.ADMIN -> "🔑 Administrator"
+                    UserRole.DOCTOR -> "🩺 Dokter"
+                    UserRole.PATIENT -> "🧑 Pasien"
+                }
+                Text(
+                    text = roleText,
+                    color = Color.White,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                )
+            }
         }
 
         // INFO
@@ -116,16 +142,6 @@ fun ActionBtn(text: String, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun ProfilePreview() {
-    val dummy = Patient(
-        1, "Berly", "berly@mail.com", "08123", "Laki-laki", "2004", "Klaten"
-    )
-
-    ProfileScreen(
-        patient = dummy,
-        onEditProfileClick = {},
-        onMedicalRecordClick = {},
-        onAppointmentClick = {},
-        onLogoutClick = {},
-        onBackClick = {}
-    )
+    val dummy = Patient(1, "Berly", "berly@mail.com", "08123", "Laki-laki", "2004", "Klaten")
+    ProfileScreen(patient = dummy, userRole = UserRole.PATIENT, onLogoutClick = {}, onBackClick = {})
 }

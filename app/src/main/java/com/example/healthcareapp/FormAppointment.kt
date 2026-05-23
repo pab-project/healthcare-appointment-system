@@ -18,8 +18,9 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormAppointment(
+    patientEmail: String = "",
     onBackClick: () -> Unit,
-    onConfirmClick: (String, String, String, String, String) -> Unit
+    onConfirmClick: (String, String, String, String, String, String) -> Unit
 ) {
     var patientName by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
@@ -209,7 +210,7 @@ fun FormAppointment(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        onConfirmClick(patientName, selectedDoctor, date, selectedTime, symptoms)
+                        onConfirmClick(patientName, patientEmail, selectedDoctor, date, selectedTime, symptoms)
                         showSuccessDialog = false
                         patientName = ""; date = ""; symptoms = ""; selectedDoctor = ""; selectedTime = ""
                         onBackClick() // Auto back after success
@@ -225,5 +226,5 @@ fun FormAppointment(
 @Preview(showBackground = true)
 @Composable
 fun FormAppointmentPreview() {
-    FormAppointment(onBackClick = {}, onConfirmClick = { _, _, _, _, _ -> })
+    FormAppointment(patientEmail = "test@test.com", onBackClick = {}, onConfirmClick = { _, _, _, _, _, _ -> })
 }
