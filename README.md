@@ -24,7 +24,7 @@
 ## Progress Week-6
 
 - [Video demo progress week 6](youtube.com/shorts/ScXzUeSjLKg?feature=share)
-- [Laporan progress week 6](https://drive.google.com/file/d/1q_OPMO6AkBhqQrPo4wb3Erm96nAca8sp/view?usp=drive_link)
+- [Laporan progress week 6](https://youtube.com/shorts/ScXzUeSjLKg?si=kV-f2BeuIEfdgVO6)
 
 ## Progress Week-9
 
