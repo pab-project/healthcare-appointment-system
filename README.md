@@ -20,3 +20,13 @@
 
 - [Video demo responsi 1](https://youtu.be/i1GGfnwnRlE)
 - [Laporan responsi 1](https://drive.google.com/file/d/1q2IaAX2dQTNzGvgF4YMkBtZAQyo1VlTg/view?usp=drive_link)
+
+## Progress Week-6
+
+- [Video demo progress week 6](https://youtube.com/shorts/ScXzUeSjLKg?si=kV-f2BeuIEfdgVO6)
+- [Laporan progress week 6](https://drive.google.com/file/d/1q_OPMO6AkBhqQrPo4wb3Erm96nAca8sp/view?usp=drive_link)
+
+## Progress Week-9
+
+- [Video demo progress week 9]()
+- [Laporan progress week 9](https://drive.google.com/file/d/1_87qJUefHRnJjL3YVnyzrhEEgFya-T7N/view?usp=drive_link)
