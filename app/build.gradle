@@ -77,6 +77,9 @@ dependencies {
     implementation "androidx.navigation3:navigation3-ui-android:1.1.1"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
 
+    // DataStore Preferences (Tugas 9 - Data Layer)
+    implementation "androidx.datastore:datastore-preferences:1.1.1"
+
 
     // Testing
     testImplementation 'junit:junit:4.13.2'

@@ -20,16 +20,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * =============================================================
+ * LoginScreen.kt
+ * =============================================================
+ * PERUBAHAN:
+ * - Login sekarang memvalidasi email+password terhadap DataManager.users
+ * - Menampilkan error message jika credentials salah
+ * - Callback berubah: onLoginSuccess(User) menggantikan onLoginClick
+ * - Session login disimpan ke DataStore oleh MainActivity
+ * =============================================================
+ */
 
 @Composable
 fun LoginScreen(
-    onLoginClick: (String, String) -> Unit,
+    onLoginSuccess: (User) -> Unit,
     onRegisterClick: () -> Unit,
     onForgotPasswordClick: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Box(
         modifier = Modifier
@@ -90,18 +102,25 @@ fun LoginScreen(
 
                     OutlinedTextField(
                         value = email,
-                        onValueChange = { email = it },
+                        onValueChange = {
+                            email = it
+                            errorMessage = null // Reset error saat user mengetik
+                        },
                         label = { Text("Email") },
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(8.dp),
+                        isError = errorMessage != null
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     OutlinedTextField(
                         value = password,
-                        onValueChange = { password = it },
+                        onValueChange = {
+                            password = it
+                            errorMessage = null // Reset error saat user mengetik
+                        },
                         label = { Text("Password") },
                         modifier = Modifier.fillMaxWidth(),
                         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -113,8 +132,20 @@ fun LoginScreen(
                                 Icon(imageVector = image, contentDescription = description)
                             }
                         },
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(8.dp),
+                        isError = errorMessage != null
                     )
+
+                    // Error message ditampilkan jika credentials salah
+                    if (errorMessage != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = errorMessage!!,
+                            color = Color(0xFFC62828),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
 
                     TextButton(
                         onClick = onForgotPasswordClick,
@@ -130,7 +161,22 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Button(
-                        onClick = { onLoginClick(email, password) },
+                        onClick = {
+                            // Validasi input tidak kosong
+                            if (email.isBlank() || password.isBlank()) {
+                                errorMessage = "Email dan password harus diisi"
+                                return@Button
+                            }
+
+                            // Autentikasi menggunakan DataManager
+                            val user = DataManager.authenticate(email.trim(), password)
+                            if (user != null) {
+                                errorMessage = null
+                                onLoginSuccess(user) // Callback sukses dengan User object
+                            } else {
+                                errorMessage = "Email atau password salah"
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -164,6 +210,21 @@ fun LoginScreen(
                             )
                         }
                     }
+
+                    // Info akun demo
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Divider(color = Color(0xFFE0E0E0))
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Text(
+                        text = "Akun Demo:",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF757575)
+                    )
+                    Text("👨‍💼 Admin: admin@healthcare.com / admin123", fontSize = 11.sp, color = Color(0xFF9E9E9E))
+                    Text("👨‍⚕️ Dokter: andi@healthcare.com / dokter123", fontSize = 11.sp, color = Color(0xFF9E9E9E))
+                    Text("🧑 Pasien: berly@healthcare.com / pasien123", fontSize = 11.sp, color = Color(0xFF9E9E9E))
                 }
             }
         }
@@ -175,7 +236,7 @@ fun LoginScreen(
 fun LoginScreenPreview() {
     MaterialTheme {
         LoginScreen(
-            onLoginClick = { _, _ -> },
+            onLoginSuccess = { },
             onRegisterClick = {},
             onForgotPasswordClick = {}
         )
