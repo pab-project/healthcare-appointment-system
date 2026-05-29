@@ -30,3 +30,8 @@
 
 - [Video demo progress week 9](https://youtu.be/_97c9E0T-KU)
 - [Laporan progress week 9](https://drive.google.com/file/d/1_87qJUefHRnJjL3YVnyzrhEEgFya-T7N/view?usp=drive_link)
+
+## Progress Week-10
+
+- [Video demo progress week 10](https://youtu.be/tq9u83NaLBo)
+- [Laporan progress week 10](https://drive.google.com/drive/folders/1-X0LUJB-H6oRuCVxwLWYPv0v9Y1rV5bZ?usp=sharing)
