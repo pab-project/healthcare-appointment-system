@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormAppointment(
-    patientEmail: String = "",
+    doctors: List<Doctor>,
     onBackClick: () -> Unit,
-    onConfirmClick: (String, String, String, String, String, String) -> Unit
+    onConfirmClick: (String, String, String, String, String) -> Unit
 ) {
     var patientName by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
@@ -34,7 +34,7 @@ fun FormAppointment(
     var showSuccessDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
 
-    val doctorOptions = DataManager.doctors.map { "${it.name} (${it.specialization})" }
+    val doctorOptions = doctors.map { "${it.name} (${it.specialization})" }
     val timeOptions = listOf("08:00 - 09:00", "09:30 - 10:30", "11:00 - 12:00", "13:30 - 14:30", "15:00 - 16:00")
 
     val textFieldColors = OutlinedTextFieldDefaults.colors(
@@ -210,7 +210,7 @@ fun FormAppointment(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        onConfirmClick(patientName, patientEmail, selectedDoctor, date, selectedTime, symptoms)
+                        onConfirmClick(patientName, selectedDoctor, date, selectedTime, symptoms)
                         showSuccessDialog = false
                         patientName = ""; date = ""; symptoms = ""; selectedDoctor = ""; selectedTime = ""
                         onBackClick() // Auto back after success
@@ -226,5 +226,5 @@ fun FormAppointment(
 @Preview(showBackground = true)
 @Composable
 fun FormAppointmentPreview() {
-    FormAppointment(patientEmail = "test@test.com", onBackClick = {}, onConfirmClick = { _, _, _, _, _, _ -> })
+    FormAppointment(doctors = emptyList(), onBackClick = {}, onConfirmClick = { _, _, _, _, _ -> })
 }
