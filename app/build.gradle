@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'org.jetbrains.kotlin.plugin.compose'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -71,6 +73,11 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended"
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.51.1"
+    kapt "com.google.dagger:hilt-compiler:2.51.1"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
 
     // Navigation 3
     implementation "androidx.navigation3:navigation3-runtime-android:1.1.1"

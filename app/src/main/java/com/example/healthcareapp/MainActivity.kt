@@ -1,7 +1,5 @@
 package com.example.healthcareapp
 
-
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,16 +7,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
+import com.example.healthcareapp.ui.HealthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-
+            val viewModel: HealthViewModel = viewModel()
+            
             // 🔥 Start langsung dari Login
             val backStack = remember { mutableStateListOf<Any>(Routes.Login) }
 
@@ -75,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                 // ================= DOCTOR LIST =================
                                 is Routes.DoctorList -> NavEntry(key) {
                                     DoctorListScreen(
-                                        doctors = DataManager.doctors,
+                                        doctors = viewModel.doctors,
                                         onDoctorClick = { doctor ->
                                             backStack.add(Routes.DoctorDetail(doctor.id))
                                         },
@@ -85,7 +88,7 @@ class MainActivity : ComponentActivity() {
 
                                 // ================= DOCTOR DETAIL =================
                                 is Routes.DoctorDetail -> NavEntry(key) {
-                                    val doctor = DataManager.doctors.find {
+                                    val doctor = viewModel.doctors.find {
                                         it.id == key.doctorId
                                     }
 
@@ -102,7 +105,7 @@ class MainActivity : ComponentActivity() {
                                 // ================= APPOINTMENT LIST =================
                                 is Routes.AppointmentList -> NavEntry(key) {
                                     AppointmentListScreen(
-                                        appointments = DataManager.appointments,
+                                        appointments = viewModel.appointments,
                                         onBackClick = { backStack.removeLastOrNull() },
 
                                         // 🔥 FIX: tidak looping lagi
@@ -121,7 +124,7 @@ class MainActivity : ComponentActivity() {
                                 // ================= APPOINTMENT DETAIL =================
                                 is Routes.AppointmentDetail -> NavEntry(key) {
 
-                                    val appointment = DataManager.appointments.find {
+                                    val appointment = viewModel.appointments.find {
                                         it.id == key.id
                                     }
 
@@ -138,9 +141,10 @@ class MainActivity : ComponentActivity() {
                                 // ================= FORM APPOINTMENT =================
                                 is Routes.FormAppointment -> NavEntry(key) {
                                     FormAppointment(
+                                        doctors = viewModel.doctors,
                                         onBackClick = { backStack.removeLastOrNull() },
                                         onConfirmClick = { patientName, doctorName, date, time, symptoms ->
-                                            DataManager.addAppointment(patientName, doctorName, date, time, symptoms)
+                                            viewModel.addAppointment(patientName, doctorName, date, time, symptoms)
                                         }
                                     )
                                 }
@@ -149,7 +153,7 @@ class MainActivity : ComponentActivity() {
                                 is Routes.HistoryList -> NavEntry(key) {
                                     HistoryScreen(
                                         onBackClick = { backStack.removeLastOrNull() },
-                                        items = DataManager.historyItems
+                                        items = viewModel.historyItems
                                     )
                                 }
 
