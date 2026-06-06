@@ -13,42 +13,22 @@ import kotlinx.coroutines.launch
  * =============================================================
  * Object singleton yang mengelola semua data dalam aplikasi.
  *
- * PERUBAHAN DARI VERSI SEBELUMNYA:
- * - Sebelumnya: Semua data in-memory, hilang saat restart
- * - Sekarang: Data appointment di-persist ke DataStore
- * - Ditambahkan: Daftar user preset untuk multi-role login
- * - Ditambahkan: Fungsi authenticate() untuk validasi login
- *
- * DATA STATIS (tetap hardcoded karena tidak berubah):
- * - Daftar dokter
- * - Daftar riwayat pemeriksaan
- * - Daftar user/akun preset
- *
- * DATA DINAMIS (disimpan ke DataStore):
- * - Daftar appointment (bisa bertambah dari user)
+ * Menggunakan Jetpack DataStore untuk persistensi data secara lokal
+ * agar perubahan CRUD Dokter/Pasien/Appointment tidak hilang setelah restart.
  * =============================================================
  */
 object DataManager {
 
-    // Reference ke repository DataStore (di-init dari MainActivity)
     private var repository: UserPreferencesRepository? = null
 
-    /**
-     * Inisialisasi DataManager dengan repository DataStore.
-     * Dipanggil sekali dari MainActivity saat app pertama kali dibuka.
-     */
     fun init(context: Context) {
         repository = UserPreferencesRepository(context)
     }
 
     fun getRepository(): UserPreferencesRepository? = repository
 
-    // ==================== USER ACCOUNTS ====================
-    /**
-     * Daftar akun preset untuk demo multi-role login.
-     * Dalam produksi, ini akan disimpan di database/server.
-     */
-    val users = listOf(
+    // ==================== DEFAULT PRESET DATA ====================
+    private val defaultUsers = listOf(
         User(
             email = "admin@healthcare.com",
             password = "admin123",
@@ -77,22 +57,7 @@ object DataManager {
         )
     )
 
-    /**
-     * Autentikasi user berdasarkan email dan password.
-     * Mencocokkan input dengan daftar user preset.
-     *
-     * @param email Email yang diinput user
-     * @param password Password yang diinput user
-     * @return User jika credentials cocok, null jika tidak
-     */
-    fun authenticate(email: String, password: String): User? {
-        return users.find {
-            it.email.equals(email, ignoreCase = true) && it.password == password
-        }
-    }
-
-    // ==================== DOCTORS (DATA STATIS) ====================
-    val doctors = listOf(
+    private val defaultDoctors = listOf(
         Doctor(
             1,
             "Dr. Andi Wijaya",
@@ -130,56 +95,204 @@ object DataManager {
         )
     )
 
-    // ==================== APPOINTMENTS (DATA DINAMIS) ====================
-    /**
-     * Daftar appointment yang tersimpan di memory.
-     * Data ini juga di-sync ke DataStore agar persisten.
-     */
+    private val defaultPatients = listOf(
+        Patient(
+            id = 1,
+            name = "Berly Marcellino",
+            email = "berly@healthcare.com",
+            phone = "08123456789",
+            gender = "Laki-laki",
+            birthDate = "2004-01-01",
+            address = "Klaten, Indonesia"
+        )
+    )
+
+    // ==================== DYNAMIC DATA LISTS ====================
+    val users = mutableStateListOf<User>()
+    val doctors = mutableStateListOf<Doctor>()
+    val patients = mutableStateListOf<Patient>()
     val appointments = mutableStateListOf<Appointment>()
 
-    /**
-     * Load appointments dari DataStore ke memory.
-     * Dipanggil saat app pertama kali dibuka.
-     */
+    // ==================== LOAD & PERSIST DATA ====================
     suspend fun loadAppointments() {
         val repo = repository ?: return
-        val saved = repo.appointments.first()
-        appointments.clear()
-        if (saved.isNotEmpty()) {
-            appointments.addAll(saved)
+
+        // 1. Load Users
+        val savedUsers = repo.users.first()
+        users.clear()
+        if (savedUsers.isNotEmpty()) {
+            users.addAll(savedUsers)
         } else {
-            // Data default jika belum ada yang tersimpan
+            users.addAll(defaultUsers)
+            persistUsers()
+        }
+
+        // 2. Load Doctors
+        val savedDoctors = repo.doctors.first()
+        doctors.clear()
+        if (savedDoctors.isNotEmpty()) {
+            doctors.addAll(savedDoctors)
+        } else {
+            doctors.addAll(defaultDoctors)
+            persistDoctors()
+        }
+
+        // 3. Load Patients
+        val savedPatients = repo.patients.first()
+        patients.clear()
+        if (savedPatients.isNotEmpty()) {
+            patients.addAll(savedPatients)
+        } else {
+            patients.addAll(defaultPatients)
+            persistPatients()
+        }
+
+        // 4. Load Appointments
+        val savedAppointments = repo.appointments.first()
+        appointments.clear()
+        if (savedAppointments.isNotEmpty()) {
+            appointments.addAll(savedAppointments)
+        } else {
             appointments.addAll(
                 listOf(
-                    Appointment(1, "Dr. Andi Wijaya", "Dokter Umum", "20 Apr 2026", "08:00 - 09:00", "Upcoming", "Berly Marcellino", "berly@healthcare.com"),
-                    Appointment(2, "Dr. Siti Rahma", "Dokter Gigi", "22 Apr 2026", "09:30 - 10:30", "Upcoming", "Berly Marcellino", "berly@healthcare.com"),
-                    Appointment(3, "Dr. Budi Santoso", "Dokter Anak", "10 Apr 2026", "08:00 - 12:00", "Completed", "Berly Marcellino", "berly@healthcare.com")
+                    Appointment(1, "Dr. Andi Wijaya", "Dokter Umum", "20/04/2026", "08:00 - 09:00", "Upcoming", "Berly Marcellino", "berly@healthcare.com"),
+                    Appointment(2, "Dr. Siti Rahma", "Dokter Gigi", "22/04/2026", "09:30 - 10:30", "Upcoming", "Berly Marcellino", "berly@healthcare.com"),
+                    Appointment(3, "Dr. Budi Santoso", "Dokter Anak", "10/04/2026", "08:00 - 12:00", "Completed", "Berly Marcellino", "berly@healthcare.com")
                 )
             )
-            // Simpan data default ke DataStore
             persistAppointments()
         }
     }
 
-    /**
-     * Menyimpan semua appointment dari memory ke DataStore.
-     * Dipanggil setiap kali ada perubahan data appointment.
-     */
-    private suspend fun persistAppointments() {
-        val repo = repository ?: return
-        repo.saveAppointments(appointments.toList())
+    suspend fun persistUsers() {
+        repository?.saveUsers(users.toList())
     }
 
-    /**
-     * Menambahkan appointment baru dan menyimpan ke DataStore.
-     *
-     * @param patientName Nama pasien
-     * @param patientEmail Email pasien
-     * @param doctorName Nama dokter yang dipilih
-     * @param date Tanggal appointment
-     * @param time Waktu appointment
-     * @param symptoms Keluhan/gejala pasien
-     */
+    suspend fun persistDoctors() {
+        repository?.saveDoctors(doctors.toList())
+    }
+
+    suspend fun persistPatients() {
+        repository?.savePatients(patients.toList())
+    }
+
+    private suspend fun persistAppointments() {
+        repository?.saveAppointments(appointments.toList())
+    }
+
+    // ==================== AUTHENTICATION ====================
+    fun authenticate(email: String, password: String): User? {
+        return users.find {
+            it.email.equals(email, ignoreCase = true) && it.password == password
+        }
+    }
+
+    // ==================== CRUD DOCTOR ====================
+    fun addDoctor(name: String, specialization: String, description: String, schedule: List<String>) {
+        val newId = (doctors.maxByOrNull { it.id }?.id ?: 0) + 1
+        val newDoc = Doctor(newId, name, specialization, description, schedule)
+        doctors.add(newDoc)
+
+        // Generate email unik untuk login dokter
+        val email = name.lowercase().replace(" ", "").replace(".", "") + "@healthcare.com"
+        users.add(User(email, "dokter123", name, UserRole.DOCTOR, newId))
+
+        CoroutineScope(Dispatchers.IO).launch {
+            persistDoctors()
+            persistUsers()
+        }
+    }
+
+    fun updateDoctor(id: Int, name: String, specialization: String, description: String, schedule: List<String>) {
+        val index = doctors.indexOfFirst { it.id == id }
+        if (index != -1) {
+            val updatedDoc = Doctor(id, name, specialization, description, schedule)
+            doctors[index] = updatedDoc
+
+            // Update nama user akun terkait
+            val userIndex = users.indexOfFirst { it.role == UserRole.DOCTOR && it.doctorId == id }
+            if (userIndex != -1) {
+                val oldUser = users[userIndex]
+                users[userIndex] = oldUser.copy(name = name)
+            }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                persistDoctors()
+                persistUsers()
+            }
+        }
+    }
+
+    fun deleteDoctor(id: Int) {
+        doctors.removeAll { it.id == id }
+        users.removeAll { it.role == UserRole.DOCTOR && it.doctorId == id }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            persistDoctors()
+            persistUsers()
+        }
+    }
+
+    // ==================== CRUD PATIENT ====================
+    fun addPatient(name: String, email: String, phone: String, gender: String, birthDate: String, address: String) {
+        val newId = (patients.maxByOrNull { it.id }?.id ?: 0) + 1
+        val newPatient = Patient(newId, name, email, phone, gender, birthDate, address)
+        patients.add(newPatient)
+
+        // Buat akun user
+        users.add(User(email, "pasien123", name, UserRole.PATIENT))
+
+        CoroutineScope(Dispatchers.IO).launch {
+            persistPatients()
+            persistUsers()
+        }
+    }
+
+    fun updatePatient(id: Int, name: String, email: String, phone: String, gender: String, birthDate: String, address: String) {
+        val index = patients.indexOfFirst { it.id == id }
+        if (index != -1) {
+            val oldPatient = patients[index]
+            val updatedPatient = Patient(id, name, email, phone, gender, birthDate, address)
+            patients[index] = updatedPatient
+
+            // Update user akun terkait
+            val userIndex = users.indexOfFirst { it.email.equals(oldPatient.email, ignoreCase = true) }
+            if (userIndex != -1) {
+                val oldUser = users[userIndex]
+                users[userIndex] = oldUser.copy(name = name, email = email)
+            }
+
+            // Update nama/email pasien di janji temu
+            appointments.forEachIndexed { apptIndex, appt ->
+                if (appt.patientEmail.equals(oldPatient.email, ignoreCase = true)) {
+                    appointments[apptIndex] = appt.copy(patientName = name, patientEmail = email)
+                }
+            }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                persistPatients()
+                persistUsers()
+                persistAppointments()
+            }
+        }
+    }
+
+    fun deletePatient(id: Int) {
+        val patientToDelete = patients.find { it.id == id }
+        if (patientToDelete != null) {
+            patients.removeAll { it.id == id }
+            users.removeAll { it.email.equals(patientToDelete.email, ignoreCase = true) }
+            appointments.removeAll { it.patientEmail.equals(patientToDelete.email, ignoreCase = true) }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                persistPatients()
+                persistUsers()
+                persistAppointments()
+            }
+        }
+    }
+
+    // ==================== APPOINTMENT OPERATIONS ====================
     fun addAppointment(
         patientName: String,
         patientEmail: String,
@@ -188,27 +301,41 @@ object DataManager {
         time: String,
         symptoms: String
     ) {
-        // Find poli from doctor name
-        val doctor = doctors.find { it.name == doctorName }
+        // Hilangkan keterangan spesialisasi dalam tanda kurung jika ada
+        var cleanDoctorName = doctorName
+        if (doctorName.contains("(")) {
+            cleanDoctorName = doctorName.substringBefore("(").trim()
+        }
+
+        val doctor = doctors.find { it.name == cleanDoctorName }
         val poli = doctor?.specialization ?: "Umum"
 
         val newId = (appointments.maxByOrNull { it.id }?.id ?: 0) + 1
         appointments.add(
             Appointment(
                 id = newId,
-                doctor = doctorName,
+                doctor = cleanDoctorName,
                 poli = poli,
                 date = date,
                 time = time,
-                status = "Upcoming",
+                status = "Pending", // Default adalah Pending agar bisa di-Acc/Reject oleh Admin
                 patientName = patientName,
                 patientEmail = patientEmail
             )
         )
 
-        // Persist ke DataStore secara asynchronous
         CoroutineScope(Dispatchers.IO).launch {
             persistAppointments()
+        }
+    }
+
+    fun updateAppointmentStatus(id: Int, status: String) {
+        val index = appointments.indexOfFirst { it.id == id }
+        if (index != -1) {
+            appointments[index] = appointments[index].copy(status = status)
+            CoroutineScope(Dispatchers.IO).launch {
+                persistAppointments()
+            }
         }
     }
 
@@ -219,12 +346,6 @@ object DataManager {
         HistoryItem(3, "Dr. Budi Santoso", "Cek Kesehatan", "15 April 2026", "Selesai")
     )
 
-    /**
-     * Mendapatkan appointment berdasarkan role user.
-     * - ADMIN: Semua appointment
-     * - DOCTOR: Appointment yang terkait dokter tersebut
-     * - PATIENT: Appointment milik pasien tersebut
-     */
     fun getAppointmentsForUser(email: String, role: UserRole): List<Appointment> {
         return when (role) {
             UserRole.ADMIN -> appointments.toList()
@@ -232,7 +353,7 @@ object DataManager {
                 val user = users.find { it.email == email }
                 val doctor = user?.doctorId?.let { id -> doctors.find { it.id == id } }
                 if (doctor != null) {
-                    appointments.filter { it.doctor == doctor.name }
+                    appointments.filter { it.doctor.equals(doctor.name, ignoreCase = true) }
                 } else {
                     emptyList()
                 }

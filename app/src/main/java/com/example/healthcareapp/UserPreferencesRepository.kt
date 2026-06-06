@@ -44,6 +44,9 @@ class UserPreferencesRepository(private val context: Context) {
         val USER_NAME = stringPreferencesKey("user_name")
         val PATIENT_PROFILE = stringPreferencesKey("patient_profile")
         val APPOINTMENTS_JSON = stringPreferencesKey("appointments_json")
+        val DOCTORS_JSON = stringPreferencesKey("doctors_json")
+        val USERS_JSON = stringPreferencesKey("users_json")
+        val PATIENTS_JSON = stringPreferencesKey("patients_json")
     }
 
     // ==================== LOGIN SESSION ====================
@@ -154,6 +157,51 @@ class UserPreferencesRepository(private val context: Context) {
         val json = preferences[PreferencesKeys.APPOINTMENTS_JSON]
         if (json != null) {
             try { Json.decodeFromString<List<Appointment>>(json) } catch (e: Exception) { emptyList() }
+        } else emptyList()
+    }
+
+    // ==================== DOCTORS ====================
+    suspend fun saveDoctors(doctorsList: List<Doctor>) {
+        val json = Json.encodeToString(doctorsList)
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.DOCTORS_JSON] = json
+        }
+    }
+
+    val doctors: Flow<List<Doctor>> = context.dataStore.data.map { preferences ->
+        val json = preferences[PreferencesKeys.DOCTORS_JSON]
+        if (json != null) {
+            try { Json.decodeFromString<List<Doctor>>(json) } catch (e: Exception) { emptyList() }
+        } else emptyList()
+    }
+
+    // ==================== USERS ====================
+    suspend fun saveUsers(usersList: List<User>) {
+        val json = Json.encodeToString(usersList)
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.USERS_JSON] = json
+        }
+    }
+
+    val users: Flow<List<User>> = context.dataStore.data.map { preferences ->
+        val json = preferences[PreferencesKeys.USERS_JSON]
+        if (json != null) {
+            try { Json.decodeFromString<List<User>>(json) } catch (e: Exception) { emptyList() }
+        } else emptyList()
+    }
+
+    // ==================== PATIENTS ====================
+    suspend fun savePatients(patientsList: List<Patient>) {
+        val json = Json.encodeToString(patientsList)
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.PATIENTS_JSON] = json
+        }
+    }
+
+    val patients: Flow<List<Patient>> = context.dataStore.data.map { preferences ->
+        val json = preferences[PreferencesKeys.PATIENTS_JSON]
+        if (json != null) {
+            try { Json.decodeFromString<List<Patient>>(json) } catch (e: Exception) { emptyList() }
         } else emptyList()
     }
 }
