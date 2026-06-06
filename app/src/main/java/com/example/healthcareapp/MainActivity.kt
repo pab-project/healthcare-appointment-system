@@ -76,6 +76,23 @@ class MainActivity : ComponentActivity() {
                     currentRole = role
                     currentUserName = name
 
+                    // Muat data profil pasien jika ada
+                    val savedPatient = repo.patientProfile.first()
+                    if (savedPatient != null) {
+                        patient = savedPatient
+                    } else if (loggedIn && role == UserRole.PATIENT) {
+                        patient = Patient(
+                            id = 1,
+                            name = name,
+                            email = email,
+                            phone = "08123456789",
+                            gender = "Laki-laki",
+                            birthDate = "2004-01-01",
+                            address = "Klaten, Indonesia"
+                        )
+                        repo.savePatientProfile(patient)
+                    }
+
                     backStack.clear()
 
                     if (loggedIn && role != null) {
@@ -130,16 +147,23 @@ class MainActivity : ComponentActivity() {
 
                     // Update patient jika role patient
                     if (user.role == UserRole.PATIENT) {
-
-                        patient = Patient(
-                            id = 1,
-                            name = user.name,
-                            email = user.email,
-                            phone = "08123456789",
-                            gender = "Laki-laki",
-                            birthDate = "2004-01-01",
-                            address = "Klaten, Indonesia"
-                        )
+                        val existingPatient = DataManager.patients.find { it.email.equals(user.email, ignoreCase = true) }
+                        if (existingPatient != null) {
+                            patient = existingPatient
+                        } else {
+                            patient = Patient(
+                                id = (DataManager.patients.maxByOrNull { it.id }?.id ?: 0) + 1,
+                                name = user.name,
+                                email = user.email,
+                                phone = "08123456789",
+                                gender = "Laki-laki",
+                                birthDate = "2004-01-01",
+                                address = "Klaten, Indonesia"
+                            )
+                            DataManager.patients.add(patient)
+                            DataManager.persistPatients()
+                        }
+                        repo.savePatientProfile(patient)
                     }
 
                     backStack.clear()
@@ -441,8 +465,6 @@ class MainActivity : ComponentActivity() {
 
                                         FormAppointment(
 
-                                            doctors = viewModel.doctors,
-
                                             patientEmail = currentEmail,
 
                                             onBackClick = {
@@ -492,6 +514,12 @@ class MainActivity : ComponentActivity() {
                                             userRole = currentRole
                                                 ?: UserRole.PATIENT,
 
+                                            onEditProfileClick = {
+                                                backStack.add(
+                                                    Routes.EditProfile
+                                                )
+                                            },
+
                                             onMedicalRecordClick = {
                                                 backStack.add(
                                                     Routes.HistoryList
@@ -510,6 +538,35 @@ class MainActivity : ComponentActivity() {
 
                                             onLogoutClick = {
                                                 handleLogout()
+                                            }
+                                        )
+                                    }
+
+                                    // ================= EDIT PROFILE =================
+                                    is Routes.EditProfile -> NavEntry(key) {
+                                        EditProfileScreen(
+                                            patient = patient,
+                                            onBackClick = {
+                                                backStack.removeLastOrNull()
+                                            },
+                                            onSaveClick = { updatedPatient ->
+                                                patient = updatedPatient
+                                                coroutineScope.launch {
+                                                    val repo = DataManager.getRepository()
+                                                    repo?.savePatientProfile(updatedPatient)
+                                                    
+                                                    // Update di list patients DataManager
+                                                    DataManager.updatePatient(
+                                                        updatedPatient.id,
+                                                        updatedPatient.name,
+                                                        updatedPatient.email,
+                                                        updatedPatient.phone,
+                                                        updatedPatient.gender,
+                                                        updatedPatient.birthDate,
+                                                        updatedPatient.address
+                                                    )
+                                                }
+                                                backStack.removeLastOrNull()
                                             }
                                         )
                                     }

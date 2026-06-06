@@ -11,9 +11,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.healthcareapp.Appointment
 
 @Composable
 fun AppointmentListScreen(
@@ -22,11 +23,17 @@ fun AppointmentListScreen(
     onAddAppointmentClick: () -> Unit,
     onDetailClick: (Appointment) -> Unit
 ) {
+    // Tiga tab status: Pending, Aktif (Upcoming/Approved), Selesai (Completed/Cancelled/Rejected)
+    var selectedTab by remember { mutableStateOf("Pending") }
 
-    var selectedTab by remember { mutableStateOf("Upcoming") }
-
-    val data = appointments.filter { 
-        if (selectedTab == "Upcoming") it.status == "Upcoming" else it.status == "Completed" 
+    val data = appointments.filter { appt ->
+        when (selectedTab) {
+            "Pending" -> appt.status.equals("Pending", ignoreCase = true)
+            "Aktif" -> appt.status.equals("Upcoming", ignoreCase = true) || appt.status.equals("Approved", ignoreCase = true)
+            else -> appt.status.equals("Completed", ignoreCase = true) || 
+                    appt.status.equals("Cancelled", ignoreCase = true) || 
+                    appt.status.equals("Rejected", ignoreCase = true)
+        }
     }
 
     Box(
@@ -34,77 +41,95 @@ fun AppointmentListScreen(
             .fillMaxSize()
             .background(AppBackground)
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-
             // Header
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
                 IconButton(onClick = onBackClick) {
-                    Text("←", fontSize = 24.sp, color = TextPrimary)
+                    Text("←", fontSize = 24.sp, color = TextPrimary, fontWeight = FontWeight.Bold)
                 }
                 Text(
-                    text = "Jadwal Appointment",
+                    text = "Jadwal Janji Temu",
                     fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
                     color = TextPrimary,
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Tabs
+            // Tabs Row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(White, shape = RoundedCornerShape(12.dp))
                     .padding(4.dp)
             ) {
-
                 TabButton(
-                    text = "Upcoming",
-                    isSelected = selectedTab == "Upcoming",
-                    onClick = { selectedTab = "Upcoming" },
+                    text = "Persetujuan",
+                    isSelected = selectedTab == "Pending",
+                    onClick = { selectedTab = "Pending" },
                     modifier = Modifier.weight(1f)
                 )
-
                 TabButton(
-                    text = "Completed",
-                    isSelected = selectedTab == "Completed",
-                    onClick = { selectedTab = "Completed" },
+                    text = "Aktif",
+                    isSelected = selectedTab == "Aktif",
+                    onClick = { selectedTab = "Aktif" },
+                    modifier = Modifier.weight(1f)
+                )
+                TabButton(
+                    text = "Riwayat",
+                    isSelected = selectedTab == "Riwayat",
+                    onClick = { selectedTab = "Riwayat" },
                     modifier = Modifier.weight(1f)
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // List
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(data) { item ->
-                    AppointmentCard(
-                        appointment = item,
-                        isUpcoming = selectedTab == "Upcoming",
-                        onDetailClick = { onDetailClick(item) }
+            // Appointments List
+            if (data.isEmpty()) {
+                Box(
+                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Tidak ada janji temu pada kategori ini.",
+                        color = TextSecondary,
+                        fontSize = 14.sp
                     )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(data) { item ->
+                        AppointmentCard(
+                            appointment = item,
+                            onDetailClick = { onDetailClick(item) }
+                        )
+                    }
                 }
             }
         }
 
-        // FAB
+        // FAB Tambah Janji Temu
         FloatingActionButton(
             onClick = onAddAppointmentClick,
             containerColor = PrimaryBlue,
             contentColor = White,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
+                .padding(24.dp),
+            shape = RoundedCornerShape(16.dp)
         ) {
-            Text("+", fontSize = 24.sp)
+            Text("+", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -121,11 +146,13 @@ fun TabButton(
             .clip(RoundedCornerShape(10.dp))
             .background(if (isSelected) PrimaryBlue else White)
             .clickable { onClick() }
-            .padding(vertical = 10.dp),
+            .padding(vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
             color = if (isSelected) White else TextSecondary
         )
     }
@@ -134,58 +161,75 @@ fun TabButton(
 @Composable
 fun AppointmentCard(
     appointment: Appointment,
-    isUpcoming: Boolean,
     onDetailClick: () -> Unit
 ) {
+    val statusColor = when (appointment.status.lowercase()) {
+        "pending" -> Color(0xFFE65100) // Orange
+        "upcoming", "approved" -> AccentGreen
+        "completed" -> TextSecondary
+        else -> AccentRed // cancelled / rejected
+    }
 
-    val statusColor = if (isUpcoming) AccentGreen else TextSecondary
+    val statusBg = when (appointment.status.lowercase()) {
+        "pending" -> Color(0xFFFFECE0)
+        "upcoming", "approved" -> Color(0xFFE8F5E9)
+        "completed" -> Color(0xFFF5F5F5)
+        else -> Color(0xFFFFEBEE)
+    }
 
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 6.dp),
+        modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = White),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(2.dp)
     ) {
-
-        Column(modifier = Modifier.padding(12.dp)) {
-
-            Text(
-                text = "${appointment.doctor} (${appointment.poli})",
-                color = TextPrimary,
-                fontSize = 16.sp
-            )
-
-            Text(
-                text = "${appointment.date} - ${appointment.time}",
-                color = TextSecondary,
-                fontSize = 14.sp
-            )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            Text(
-                text = appointment.status,
-                color = statusColor,
-                fontSize = 14.sp
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row {
-
-                TextButton(onClick = onDetailClick) {
-                    Text("Detail", color = PrimaryBlue)
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = appointment.doctor,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary,
+                    fontSize = 16.sp
+                )
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = statusBg
+                ) {
+                    Text(
+                        text = appointment.status,
+                        color = statusColor,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    )
                 }
+            }
 
-                if (isUpcoming) {
-                    TextButton(onClick = { }) {
-                        Text("Reschedule", color = PrimaryBlue)
-                    }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Spesialisasi: ${appointment.poli}",
+                color = TextSecondary,
+                fontSize = 13.sp
+            )
+            
+            Text(
+                text = "Waktu: ${appointment.date} - ${appointment.time}",
+                color = TextSecondary,
+                fontSize = 13.sp
+            )
 
-                    TextButton(onClick = { }) {
-                        Text("Cancel", color = AccentRed)
-                    }
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(onClick = onDetailClick) {
+                    Text("Detail Info →", color = PrimaryBlue, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 }
             }
         }
