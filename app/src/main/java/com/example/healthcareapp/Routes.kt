@@ -5,6 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class Routes {
+
+    // Tambahkan ini di dalam sealed class Routes
+    @Serializable
+    data object Register : Routes()
+
     @Serializable
     data object Landing : Routes()
     @Serializable
