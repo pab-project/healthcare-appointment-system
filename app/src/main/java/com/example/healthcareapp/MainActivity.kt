@@ -36,6 +36,8 @@ class MainActivity : ComponentActivity() {
             var currentEmail by remember { mutableStateOf("") }
             var currentUserName by remember { mutableStateOf("") }
 
+            var showSplash by remember { mutableStateOf(true) }
+
             // ================= NAVIGATION =================
             val backStack = remember {
                 mutableStateListOf<Any>()
@@ -208,9 +210,11 @@ class MainActivity : ComponentActivity() {
             // ================= UI =================
             HealthcareTheme {
 
-                if (isLoading) {
+                if (showSplash) {
 
-                    Text("Loading...")
+                    SplashScreen(
+                        onSplashFinished = { showSplash = false }
+                    )
 
                 } else {
 
@@ -239,9 +243,20 @@ class MainActivity : ComponentActivity() {
                                                 handleLogin(user)
                                             },
 
-                                            onRegisterClick = { },
+                                            onRegisterClick = { backStack.add(Routes.Register) },
 
                                             onForgotPasswordClick = { }
+                                        )
+                                    }
+
+                                    is Routes.Register -> NavEntry(key) {
+                                        RegisterScreen(
+                                            onRegisterSuccess = { user ->
+                                                handleLogin(user)
+                                            },
+                                            onBackToLogin = {
+                                                backStack.removeLastOrNull()
+                                            }
                                         )
                                     }
 
