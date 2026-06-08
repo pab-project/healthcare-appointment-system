@@ -446,7 +446,11 @@ class MainActivity : ComponentActivity() {
                                                         appointment.id
                                                     )
                                                 )
-                                            }
+                                            },
+
+                                            onRescheduleClick = {},
+
+                                            onCancelClick = {}
                                         )
                                     }
 

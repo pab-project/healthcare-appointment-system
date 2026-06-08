@@ -1,38 +1,44 @@
 package com.example.healthcareapp
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.HorizontalDivider
 
 @Composable
 fun AppointmentListScreen(
     appointments: List<Appointment>,
     onBackClick: () -> Unit,
     onAddAppointmentClick: () -> Unit,
-    onDetailClick: (Appointment) -> Unit
+    onDetailClick: (Appointment) -> Unit,
+    onRescheduleClick: (Appointment) -> Unit,
+    onCancelClick: (Appointment) -> Unit
 ) {
-    // Tiga tab status: Pending, Aktif (Upcoming/Approved), Selesai (Completed/Cancelled/Rejected)
-    var selectedTab by remember { mutableStateOf("Pending") }
 
-    val data = appointments.filter { appt ->
+    var selectedTab by remember { mutableStateOf("Upcoming") }
+
+    val filteredAppointments = appointments.filter { appt ->
         when (selectedTab) {
-            "Pending" -> appt.status.equals("Pending", ignoreCase = true)
-            "Aktif" -> appt.status.equals("Upcoming", ignoreCase = true) || appt.status.equals("Approved", ignoreCase = true)
-            else -> appt.status.equals("Completed", ignoreCase = true) || 
-                    appt.status.equals("Cancelled", ignoreCase = true) || 
-                    appt.status.equals("Rejected", ignoreCase = true)
+            "Upcoming" -> appt.status.equals("Upcoming", true)
+
+            else ->
+                appt.status.equals("Completed", true)
         }
     }
 
@@ -41,95 +47,144 @@ fun AppointmentListScreen(
             .fillMaxSize()
             .background(AppBackground)
     ) {
+
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+            modifier = Modifier.fillMaxSize()
         ) {
-            // Header
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 16.dp)
+
+            // HEADER
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(
+                                Color(0xFF1565C0),
+                                Color(0xFF0D47A1)
+                            )
+                        )
+                    )
+                    .padding(top = 48.dp, bottom = 30.dp)
             ) {
-                IconButton(onClick = onBackClick) {
-                    Text("←", fontSize = 24.sp, color = TextPrimary, fontWeight = FontWeight.Bold)
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    IconButton(onClick = onBackClick) {
+                        Text(
+                            "←",
+                            color = White,
+                            fontSize = 24.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Column {
+
+                        Text(
+                            "Appointment",
+                            color = White,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Text(
+                            "${appointments.size} Jadwal Terdaftar",
+                            color = White.copy(alpha = 0.8f),
+                            fontSize = 13.sp
+                        )
+                    }
                 }
-                Text(
-                    text = "Jadwal Janji Temu",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
             }
 
-            // Tabs Row
+            // TAB
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(White, shape = RoundedCornerShape(12.dp))
+                    .padding(horizontal = 20.dp)
+                    .background(
+                        White,
+                        RoundedCornerShape(16.dp)
+                    )
                     .padding(4.dp)
             ) {
+
                 TabButton(
-                    text = "Persetujuan",
-                    isSelected = selectedTab == "Pending",
-                    onClick = { selectedTab = "Pending" },
+                    text = "Upcoming",
+                    isSelected = selectedTab == "Upcoming",
+                    onClick = { selectedTab = "Upcoming" },
                     modifier = Modifier.weight(1f)
                 )
+
                 TabButton(
-                    text = "Aktif",
-                    isSelected = selectedTab == "Aktif",
-                    onClick = { selectedTab = "Aktif" },
-                    modifier = Modifier.weight(1f)
-                )
-                TabButton(
-                    text = "Riwayat",
-                    isSelected = selectedTab == "Riwayat",
-                    onClick = { selectedTab = "Riwayat" },
+                    text = "Completed",
+                    isSelected = selectedTab == "Completed",
+                    onClick = { selectedTab = "Completed" },
                     modifier = Modifier.weight(1f)
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Appointments List
-            if (data.isEmpty()) {
+            if (filteredAppointments.isEmpty()) {
+
                 Box(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    modifier = Modifier.weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
+
                     Text(
-                        text = "Tidak ada janji temu pada kategori ini.",
-                        color = TextSecondary,
-                        fontSize = 14.sp
+                        "Belum ada data appointment",
+                        color = TextSecondary
                     )
                 }
+
             } else {
+
                 LazyColumn(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(data) { item ->
+
+                    items(filteredAppointments) { appointment ->
+
                         AppointmentCard(
-                            appointment = item,
-                            onDetailClick = { onDetailClick(item) }
+                            appointment = appointment,
+                            onDetailClick = { onDetailClick(appointment) },
+                            onRescheduleClick = { onRescheduleClick(appointment) },
+                            onCancelClick = { onCancelClick(appointment) }
                         )
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(90.dp))
                     }
                 }
             }
         }
 
-        // FAB Tambah Janji Temu
         FloatingActionButton(
             onClick = onAddAppointmentClick,
             containerColor = PrimaryBlue,
             contentColor = White,
+            shape = RoundedCornerShape(18.dp),
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(24.dp),
-            shape = RoundedCornerShape(16.dp)
+                .padding(20.dp)
         ) {
-            Text("+", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+
+            Text(
+                "+",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
@@ -141,97 +196,251 @@ fun TabButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
+
+    Surface(
         modifier = modifier
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (isSelected) PrimaryBlue else White)
-            .clickable { onClick() }
-            .padding(vertical = 12.dp),
-        contentAlignment = Alignment.Center
+            .clickable { onClick() },
+        color = if (isSelected)
+            PrimaryBlue
+        else
+            Color.Transparent,
+        shape = RoundedCornerShape(12.dp)
     ) {
-        Text(
-            text = text,
-            fontWeight = FontWeight.Bold,
-            fontSize = 13.sp,
-            color = if (isSelected) White else TextSecondary
-        )
+
+        Box(
+            modifier = Modifier.padding(vertical = 12.dp),
+            contentAlignment = Alignment.Center
+        ) {
+
+            Text(
+                text = text,
+                color = if (isSelected)
+                    White
+                else
+                    TextSecondary,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+        }
     }
 }
 
 @Composable
 fun AppointmentCard(
     appointment: Appointment,
-    onDetailClick: () -> Unit
+    onDetailClick: () -> Unit,
+    onRescheduleClick: () -> Unit,
+    onCancelClick: () -> Unit
 ) {
-    val statusColor = when (appointment.status.lowercase()) {
-        "pending" -> Color(0xFFE65100) // Orange
-        "upcoming", "approved" -> AccentGreen
-        "completed" -> TextSecondary
-        else -> AccentRed // cancelled / rejected
-    }
 
-    val statusBg = when (appointment.status.lowercase()) {
-        "pending" -> Color(0xFFFFECE0)
-        "upcoming", "approved" -> Color(0xFFE8F5E9)
-        "completed" -> Color(0xFFF5F5F5)
-        else -> Color(0xFFFFEBEE)
-    }
+    val isUpcoming = appointment.status.equals("Upcoming", true)
+
+    val statusColor =
+        if (isUpcoming) AccentGreen
+        else TextSecondary
+
+    val statusBackground =
+        if (isUpcoming)
+            Color(0xFFE8F5E9)
+        else
+            Color(0xFFF1F3F4)
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = White),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(2.dp)
+        shape = RoundedCornerShape(18.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = White
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 4.dp
+        )
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+
+        Column(
+            modifier = Modifier.padding(18.dp)
+        ) {
+
+            // Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Top
             ) {
-                Text(
-                    text = appointment.doctor,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary,
-                    fontSize = 16.sp
-                )
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = statusBg
+
+                Column(
+                    modifier = Modifier.weight(1f)
                 ) {
+
+                    Text(
+                        text = appointment.doctor,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = appointment.poli,
+                        fontSize = 13.sp,
+                        color = TextSecondary
+                    )
+                }
+
+                Surface(
+                    shape = RoundedCornerShape(20.dp),
+                    color = statusBackground
+                ) {
+
                     Text(
                         text = appointment.status,
+                        modifier = Modifier.padding(
+                            horizontal = 10.dp,
+                            vertical = 5.dp
+                        ),
                         color = statusColor,
                         fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Spesialisasi: ${appointment.poli}",
-                color = TextSecondary,
-                fontSize = 13.sp
-            )
-            
-            Text(
-                text = "Waktu: ${appointment.date} - ${appointment.time}",
-                color = TextSecondary,
-                fontSize = 13.sp
+            Spacer(modifier = Modifier.height(14.dp))
+
+            HorizontalDivider(
+                color = Color(0xFFE0E0E0)
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            // Date
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                TextButton(onClick = onDetailClick) {
-                    Text("Detail Info →", color = PrimaryBlue, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Text("📅")
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = appointment.date,
+                    color = TextPrimary,
+                    fontSize = 14.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Time
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("🕒")
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = appointment.time,
+                    color = TextPrimary,
+                    fontSize = 14.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            // Upcoming Appointment
+            if (isUpcoming) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+
+                    OutlinedButton(
+                        onClick = onDetailClick,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("Detail")
+                    }
+
+                    OutlinedButton(
+                        onClick = onRescheduleClick,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("Reschedule")
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Button(
+                    onClick = onCancelClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AccentRed
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        "Batalkan Appointment",
+                        color = White
+                    )
+                }
+
+            } else {
+
+                Button(
+                    onClick = onDetailClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = PrimaryBlue
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        "Lihat Detail",
+                        color = White
+                    )
                 }
             }
         }
+    }
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun AppointmentListPreview() {
+
+    val appointments = listOf(
+        Appointment(
+            id = 1,
+            doctor = "Dr. Andi Wijaya",
+            poli = "Penyakit Dalam",
+            date = "12 Juni 2026",
+            time = "09:00",
+            status = "Upcoming",
+            patientName = "Ardina",
+            patientEmail = "ardina@gmail.com"
+        ),
+        Appointment(
+            id = 2,
+            doctor = "Dr. Siti Rahma",
+            poli = "Jantung",
+            date = "5 Juni 2026",
+            time = "14:00",
+            status = "Completed",
+            patientName = "Ardina",
+            patientEmail = "ardina@gmail.com"
+        )
+    )
+
+    HealthcareTheme {
+        AppointmentListScreen(
+            appointments = appointments,
+            onBackClick = {},
+            onAddAppointmentClick = {},
+            onDetailClick = {},
+            onRescheduleClick = {},
+            onCancelClick = {}
+        )
     }
 }
