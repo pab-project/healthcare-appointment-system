@@ -5,10 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,11 +28,18 @@ fun DoctorListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Daftar Dokter", color = Color.White, fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1565C0)),
+                title = {
+                    Text(
+                        text = "Daftar Dokter",
+                        color = White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = PrimaryBlue),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Text("←", color = Color.White, fontSize = 24.sp)
+                        Text("←", color = White, fontSize = 24.sp)
                     }
                 }
             )
@@ -39,12 +49,41 @@ fun DoctorListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color(0xFFF5F7FA)),
+                .background(AppBackground),
             contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            // ── Jumlah dokter ────────────────────────────────────────────────
+            item {
+                Text(
+                    text = "${doctors.size} dokter tersedia",
+                    fontSize = 13.sp,
+                    color = TextSecondary,
+                    modifier = Modifier.padding(horizontal = 2.dp, vertical = 4.dp)
+                )
+            }
+
+            // ── List dokter ──────────────────────────────────────────────────
             items(doctors) { doctor ->
                 DoctorCard(doctor = doctor, onClick = { onDoctorClick(doctor) })
+            }
+
+            // ── Empty state ──────────────────────────────────────────────────
+            if (doctors.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Tidak ada dokter tersedia.",
+                            color = TextHint,
+                            fontSize = 14.sp
+                        )
+                    }
+                }
             }
         }
     }
@@ -57,31 +96,75 @@ fun DoctorCard(doctor: Doctor, onClick: () -> Unit) {
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = White),
+        elevation = CardDefaults.cardElevation(2.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = doctor.name,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1565C0)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = doctor.specialization,
-                fontSize = 14.sp,
-                color = Color(0xFF757575)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Lihat Detail →",
-                fontSize = 13.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF1976D2)
-            )
+            // Avatar
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFE3F2FD)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("👨‍⚕️", fontSize = 22.sp)
+            }
+
+            Spacer(Modifier.width(14.dp))
+
+            // Info
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = doctor.name,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+                Spacer(Modifier.height(2.dp))
+                Text(
+                    text = doctor.specialization,
+                    fontSize = 13.sp,
+                    color = TextSecondary
+                )
+                Spacer(Modifier.height(6.dp))
+                // Jadwal pertama sebagai preview
+                if (doctor.schedule.isNotEmpty()) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(5.dp)
+                                .clip(CircleShape)
+                                .background(PrimaryBlue)
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            text = doctor.schedule.first(),
+                            fontSize = 12.sp,
+                            color = TextHint
+                        )
+                    }
+                }
+            }
+
+            Spacer(Modifier.width(8.dp))
+
+            // Arrow chip
+            Surface(
+                shape = RoundedCornerShape(10.dp),
+                color = Color(0xFFE3F2FD)
+            ) {
+                Text(
+                    text = "→",
+                    color = PrimaryBlue,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
+                )
+            }
         }
     }
 }
@@ -89,50 +172,19 @@ fun DoctorCard(doctor: Doctor, onClick: () -> Unit) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DoctorListScreenPreview() {
-
     val dummyDoctors = listOf(
-        Doctor(
-            1,
-            "Dr. A",
-            "Dokter Umum",
-            "Dokter yang akan membantu Anda menangani keluhan kesehatan umum.",
-            listOf("Senin 08:00-12:00", "Selasa 10:00-14:00", "Rabu 08:00-12:00", "Kamis 12:00-16:00", "Jumat 08:00-11:00")
-        ),
-        Doctor(
-            2,
-            "Dr. B",
-            "Dokter Gigi",
-            "Dokter yang menangani kesehatan gigi.",
-            listOf("Senin 09:00-13:00", "Selasa 09:00-13:00", "Rabu 13:00-17:00", "Kamis 09:00-13:00", "Jumat 09:00-12:00")
-        ),
-        Doctor(
-            3,
-            "Dr. C",
-            "Dokter Anak",
-            "Dokter yang menangani kesehatan anak.",
-            listOf("Senin 08:00-11:00", "Selasa 11:00-15:00", "Rabu 08:00-11:00", "Kamis 11:00-15:00", "Jumat 08:00-11:00")
-        ),
-        Doctor(
-            4,
-            "Dr. D",
-            "Dokter Kulit",
-            "Dokter yang menangani masalah kulit.",
-            listOf("Senin 10:00-14:00", "Selasa 10:00-14:00", "Rabu 14:00-18:00", "Kamis 10:00-14:00", "Jumat 10:00-13:00")
-        ),
-        Doctor(
-            5,
-            "Dr. E",
-            "Dokter Mata",
-            "Dokter yang menangani kesehatan mata.",
-            listOf("Senin 08:00-12:00", "Selasa 08:00-12:00", "Rabu 12:00-16:00", "Kamis 08:00-12:00", "Jumat 08:00-11:00")
-        )
+        Doctor(1, "Dr. Andi Wijaya", "Dokter Umum", "Dokter yang akan membantu Anda menangani keluhan kesehatan umum.",
+            listOf("Senin 08:00-12:00", "Selasa 10:00-14:00")),
+        Doctor(2, "Dr. Budi Santoso", "Dokter Gigi", "Dokter yang menangani kesehatan gigi.",
+            listOf("Senin 09:00-13:00", "Rabu 13:00-17:00")),
+        Doctor(3, "Dr. Citra Dewi", "Dokter Anak", "Dokter yang menangani kesehatan anak.",
+            listOf("Selasa 11:00-15:00", "Kamis 08:00-11:00")),
+        Doctor(4, "Dr. Dani Kusuma", "Dokter Kulit", "Dokter yang menangani masalah kulit.",
+            listOf("Rabu 10:00-14:00", "Jumat 10:00-13:00")),
+        Doctor(5, "Dr. Eva Marlina", "Dokter Mata", "Dokter yang menangani kesehatan mata.",
+            listOf("Senin 08:00-12:00", "Kamis 12:00-16:00"))
     )
-
     MaterialTheme {
-        DoctorListScreen(
-            doctors = dummyDoctors,
-            onDoctorClick = {},
-            onBackClick = {}
-        )
+        DoctorListScreen(doctors = dummyDoctors, onDoctorClick = {}, onBackClick = {})
     }
 }
