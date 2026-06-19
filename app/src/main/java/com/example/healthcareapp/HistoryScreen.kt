@@ -4,16 +4,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.History
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,22 +33,74 @@ fun HistoryScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF1565C0)),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Text("←", color = Color.White, fontSize = 24.sp)
+                        Icon(
+                            imageVector = Icons.Rounded.ArrowBack,
+                            contentDescription = "Kembali",
+                            tint = Color.White
+                        )
                     }
                 }
             )
         }
     ) { padding ->
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color(0xFFF5F7FA)),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .background(AppBackground)
         ) {
-            items(items) { item ->
-                HistoryCard(item)
+            if (items.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Surface(
+                            shape = CircleShape,
+                            color = Color(0xFFECEFF1),
+                            modifier = Modifier.size(80.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = Icons.Rounded.History,
+                                    contentDescription = null,
+                                    tint = TextSecondary,
+                                    modifier = Modifier.size(40.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            "Belum ada Riwayat",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            "Riwayat pemeriksaan medis Anda setelah konsultasi selesai akan muncul di sini.",
+                            fontSize = 12.sp,
+                            color = TextSecondary,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(items) { item ->
+                        HistoryCard(item)
+                    }
+                }
             }
         }
     }
@@ -53,18 +110,19 @@ fun HistoryScreen(
 fun HistoryCard(item: HistoryItem) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = item.doctorName,
-                    fontSize = 16.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF1565C0)
                 )
@@ -75,31 +133,31 @@ fun HistoryCard(item: HistoryItem) {
                     Text(
                         text = item.status,
                         color = Color(0xFF2E7D32),
-                        fontSize = 12.sp,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                        fontSize = 11.sp,
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
                         fontWeight = FontWeight.Bold
                     )
                 }
             }
             
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = item.service,
-                fontSize = 14.sp,
-                color = Color(0xFF1A1A2E)
+                fontSize = 13.sp,
+                color = TextPrimary
             )
             
             Spacer(modifier = Modifier.height(12.dp))
-            Divider(color = Color(0xFFEFEFEF))
-            Spacer(modifier = Modifier.height(12.dp))
+            Divider(color = AppBackground)
+            Spacer(modifier = Modifier.height(10.dp))
             
-            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("📅", fontSize = 14.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = item.date,
-                    fontSize = 13.sp,
-                    color = Color(0xFF757575)
+                    fontSize = 12.sp,
+                    color = TextSecondary
                 )
             }
         }
@@ -122,13 +180,6 @@ fun HistoryScreenPreview() {
             doctorName = "Dr. Siti Rahma",
             service = "Konsultasi Gigi",
             date = "18 April 2026",
-            status = "Selesai"
-        ),
-        HistoryItem(
-            id = 3,
-            doctorName = "Dr. Budi Santoso",
-            service = "Cek Kesehatan",
-            date = "15 April 2026",
             status = "Selesai"
         )
     )

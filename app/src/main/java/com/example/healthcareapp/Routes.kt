@@ -39,4 +39,10 @@ sealed class Routes {
     data object AdminDashboard : Routes()
     @Serializable
     data object DoctorDashboard : Routes()
+    @Serializable
+    data object Notifications : Routes()
+    @Serializable
+    data object DoctorProfile : Routes()
+    @Serializable
+    data object DoctorEditProfile : Routes()
 }

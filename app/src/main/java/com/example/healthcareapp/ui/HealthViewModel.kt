@@ -22,4 +22,8 @@ class HealthViewModel @Inject constructor() : ViewModel() {
     fun addAppointment(patientName: String, patientEmail: String, doctorName: String, date: String, time: String, symptoms: String) {
         DataManager.addAppointment(patientName, patientEmail, doctorName, date, time, symptoms)
     }
+
+    fun rescheduleAppointment(id: Int, newDate: String, newTime: String) {
+        DataManager.rescheduleAppointment(id, newDate, newTime)
+    }
 }

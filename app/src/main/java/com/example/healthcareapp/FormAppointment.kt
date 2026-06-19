@@ -256,7 +256,13 @@ fun FormAppointment(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        if (patientName.isBlank() || selectedDoctor.isBlank() || date.isBlank() || selectedTime.isBlank() || symptoms.isBlank()) {
+                            showErrorDialog = true
+                        } else {
+                            showSuccessDialog = true
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),

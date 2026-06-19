@@ -419,18 +419,17 @@ fun RegisterScreen(
                                                 phone = phone,
                                                 gender = gender,
                                                 birthDate = birthDate,
-                                                address = address
+                                                address = address,
+                                                password = password,
+                                                onComplete = {
+                                                    val newUser = DataManager.authenticate(email, password)
+                                                    if (newUser != null) {
+                                                        onRegisterSuccess(newUser)
+                                                    } else {
+                                                        errorMessage = "Gagal masuk otomatis. Silakan masuk manual."
+                                                    }
+                                                }
                                             )
-                                            // Override password default
-                                            val userIndex = DataManager.users.indexOfFirst {
-                                                it.email.equals(email, ignoreCase = true)
-                                            }
-                                            if (userIndex != -1) {
-                                                DataManager.users[userIndex] =
-                                                    DataManager.users[userIndex].copy(password = password)
-                                            }
-                                            val newUser = DataManager.authenticate(email, password)
-                                            if (newUser != null) onRegisterSuccess(newUser)
                                         }
                                     }
                                 },

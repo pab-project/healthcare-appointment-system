@@ -79,20 +79,29 @@ class MainActivity : ComponentActivity() {
                     currentUserName = name
 
                     // Muat data profil pasien jika ada
-                    val savedPatient = repo.patientProfile.first()
-                    if (savedPatient != null) {
-                        patient = savedPatient
-                    } else if (loggedIn && role == UserRole.PATIENT) {
-                        patient = Patient(
-                            id = 1,
-                            name = name,
-                            email = email,
-                            phone = "08123456789",
-                            gender = "Laki-laki",
-                            birthDate = "2004-01-01",
-                            address = "Klaten, Indonesia"
-                        )
-                        repo.savePatientProfile(patient)
+                    if (loggedIn && role == UserRole.PATIENT) {
+                        val savedPatient = DataManager.patients.find { it.email.equals(email, ignoreCase = true) }
+                        if (savedPatient != null) {
+                            patient = savedPatient
+                        } else {
+                            patient = Patient(
+                                id = 1,
+                                name = name,
+                                email = email,
+                                phone = "08123456789",
+                                gender = "Laki-laki",
+                                birthDate = "2004-01-01",
+                                address = "Klaten, Indonesia"
+                            )
+                            DataManager.addPatient(
+                                name = patient.name,
+                                email = patient.email,
+                                phone = patient.phone,
+                                gender = patient.gender,
+                                birthDate = patient.birthDate,
+                                address = patient.address
+                            )
+                        }
                     }
 
                     backStack.clear()
@@ -125,6 +134,12 @@ class MainActivity : ComponentActivity() {
                 }
 
                 isLoading = false
+            }
+
+            LaunchedEffect(currentEmail) {
+                if (currentEmail.isNotBlank()) {
+                    DataManager.loadNotifications(currentEmail)
+                }
             }
 
             // ================= HANDLE LOGIN =================
@@ -162,10 +177,15 @@ class MainActivity : ComponentActivity() {
                                 birthDate = "2004-01-01",
                                 address = "Klaten, Indonesia"
                             )
-                            DataManager.patients.add(patient)
-                            DataManager.persistPatients()
+                            DataManager.addPatient(
+                                name = patient.name,
+                                email = patient.email,
+                                phone = patient.phone,
+                                gender = patient.gender,
+                                birthDate = patient.birthDate,
+                                address = patient.address
+                            )
                         }
-                        repo.savePatientProfile(patient)
                     }
 
                     backStack.clear()
@@ -263,29 +283,31 @@ class MainActivity : ComponentActivity() {
                                     // ================= HOME =================
                                     is Routes.Home -> NavEntry(key) {
 
+                                        val upcoming = viewModel.getAppointmentsForUser(
+                                            currentEmail,
+                                            UserRole.PATIENT
+                                        ).filter { it.status.equals("Upcoming", ignoreCase = true) }
+
                                         MainScreen(
-
                                             isLoggedIn = true,
-
                                             patient = patient,
-
+                                            unreadNotificationsCount = DataManager.notifications.count { !it.isRead },
+                                            upcomingAppointments = upcoming,
                                             onLoginClick = { },
-
                                             onProfileClick = {
                                                 backStack.add(Routes.Profile)
                                             },
-
                                             onDoctorListClick = {
                                                 backStack.add(Routes.DoctorList)
                                             },
-
                                             onAppointmentClick = {
                                                 backStack.add(Routes.AppointmentList)
                                             },
-
                                             onFindHospitalClick = { },
-
-                                            onEmergencyCallClick = { }
+                                            onEmergencyCallClick = { },
+                                            onNotificationClick = {
+                                                backStack.add(Routes.Notifications)
+                                            }
                                         )
                                     }
 
@@ -340,15 +362,12 @@ class MainActivity : ComponentActivity() {
                                             )
 
                                         DoctorDashboardScreen(
-
                                             doctor = doctor,
-
                                             doctorName = currentUserName.ifBlank {
                                                 "Dokter"
                                             },
-
                                             appointments = doctorAppointments,
-
+                                            unreadNotificationsCount = DataManager.notifications.count { !it.isRead },
                                             onAppointmentDetailClick = { appointment ->
                                                 backStack.add(
                                                     Routes.AppointmentDetail(
@@ -356,7 +375,18 @@ class MainActivity : ComponentActivity() {
                                                     )
                                                 )
                                             },
-
+                                            onAcceptClick = { apptId ->
+                                                DataManager.updateAppointmentStatus(apptId, "Upcoming")
+                                            },
+                                            onRejectClick = { apptId ->
+                                                DataManager.updateAppointmentStatus(apptId, "Cancelled")
+                                            },
+                                            onProfileClick = {
+                                                backStack.add(Routes.DoctorProfile)
+                                            },
+                                            onNotificationClick = {
+                                                backStack.add(Routes.Notifications)
+                                            },
                                             onLogoutClick = {
                                                 handleLogout()
                                             }
@@ -448,9 +478,20 @@ class MainActivity : ComponentActivity() {
                                                 )
                                             },
 
-                                            onRescheduleClick = {},
+                                            onRescheduleClick = { appointment, newDate, newTime ->
+                                                viewModel.rescheduleAppointment(
+                                                    appointment.id,
+                                                    newDate,
+                                                    newTime
+                                                )
+                                            },
 
-                                            onCancelClick = {}
+                                            onCancelClick = { appointment ->
+                                                DataManager.updateAppointmentStatus(
+                                                    appointment.id,
+                                                    "Cancelled"
+                                                )
+                                            }
                                         )
                                     }
 
@@ -571,9 +612,6 @@ class MainActivity : ComponentActivity() {
                                             onSaveClick = { updatedPatient ->
                                                 patient = updatedPatient
                                                 coroutineScope.launch {
-                                                    val repo = DataManager.getRepository()
-                                                    repo?.savePatientProfile(updatedPatient)
-                                                    
                                                     // Update di list patients DataManager
                                                     DataManager.updatePatient(
                                                         updatedPatient.id,
@@ -588,6 +626,73 @@ class MainActivity : ComponentActivity() {
                                                 backStack.removeLastOrNull()
                                             }
                                         )
+                                    }
+
+                                    // ================= NOTIFICATIONS =================
+                                    is Routes.Notifications -> NavEntry(key) {
+                                        NotificationScreen(
+                                            notifications = DataManager.notifications.toList(),
+                                            currentUserEmail = currentEmail,
+                                            onBackClick = {
+                                                backStack.removeLastOrNull()
+                                            },
+                                            onMarkAsRead = { id ->
+                                                DataManager.markNotificationAsRead(id)
+                                            },
+                                            onMarkAllAsRead = {
+                                                DataManager.markAllNotificationsAsRead(currentEmail)
+                                            },
+                                            onDeleteNotification = { id ->
+                                                DataManager.deleteNotification(id)
+                                            }
+                                        )
+                                    }
+
+                                    // ================= DOCTOR PROFILE =================
+                                    is Routes.DoctorProfile -> NavEntry(key) {
+                                        val user = viewModel.users.find { it.email == currentEmail }
+                                        val doctor = user?.doctorId?.let { id ->
+                                            viewModel.doctors.find { it.id == id }
+                                        }
+                                        if (doctor != null) {
+                                            DoctorProfileScreen(
+                                                doctor = doctor,
+                                                doctorEmail = currentEmail,
+                                                onEditProfileClick = {
+                                                    backStack.add(Routes.DoctorEditProfile)
+                                                },
+                                                onLogoutClick = {
+                                                    handleLogout()
+                                                },
+                                                onBackClick = {
+                                                    backStack.removeLastOrNull()
+                                                }
+                                            )
+                                        } else {
+                                            Text("Dokter tidak ditemukan")
+                                        }
+                                    }
+
+                                    // ================= DOCTOR EDIT PROFILE =================
+                                    is Routes.DoctorEditProfile -> NavEntry(key) {
+                                        val user = viewModel.users.find { it.email == currentEmail }
+                                        val doctor = user?.doctorId?.let { id ->
+                                            viewModel.doctors.find { it.id == id }
+                                        }
+                                        if (doctor != null) {
+                                            DoctorEditProfileScreen(
+                                                doctor = doctor,
+                                                onSaveClick = { name, spec, desc, sched ->
+                                                    DataManager.updateDoctor(doctor.id, name, spec, desc, sched)
+                                                    backStack.removeLastOrNull()
+                                                },
+                                                onBackClick = {
+                                                    backStack.removeLastOrNull()
+                                                }
+                                            )
+                                        } else {
+                                            Text("Dokter tidak ditemukan")
+                                        }
                                     }
 
                                     // ================= FALLBACK =================
