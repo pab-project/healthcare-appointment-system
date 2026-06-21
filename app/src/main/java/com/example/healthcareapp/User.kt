@@ -28,8 +28,10 @@ enum class UserRole {
 @Serializable
 data class User(
     val email: String,
-    val password: String,
     val name: String,
     val role: UserRole,
-    val doctorId: Int? = null
+    val password: String = "",
+    val doctorId: Int? = null,
+    val id: Int = 0,
+    val token: String = ""
 )

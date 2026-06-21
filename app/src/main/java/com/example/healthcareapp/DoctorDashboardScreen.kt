@@ -9,7 +9,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +31,7 @@ fun DoctorDashboardScreen(
     onAppointmentDetailClick: (Appointment) -> Unit,
     onAcceptClick: (Int) -> Unit = {},
     onRejectClick: (Int) -> Unit = {},
+    onCompleteClick: (Int, String, String, String, String) -> Unit = { _, _, _, _, _ -> },
     onProfileClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
     onLogoutClick: () -> Unit
@@ -36,6 +39,12 @@ fun DoctorDashboardScreen(
     val upcomingCount = appointments.count { it.status == "Upcoming" }
     val pendingCount = appointments.count { it.status.equals("Pending", ignoreCase = true) }
     val doneCount = appointments.count { it.status.equals("Completed", ignoreCase = true) || it.status.equals("Done", ignoreCase = true) }
+
+    var activeCompletingApptId by remember { mutableStateOf<Int?>(null) }
+    var diagnosis by remember { mutableStateOf("") }
+    var treatment by remember { mutableStateOf("") }
+    var medications by remember { mutableStateOf("") }
+    var notes by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -351,6 +360,24 @@ fun DoctorDashboardScreen(
                                 ) {
                                     Text("Lihat Detail →", color = Color(0xFF2E7D32), fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
                                 }
+
+                                if (isUpcoming) {
+                                    Button(
+                                        onClick = {
+                                            activeCompletingApptId = appt.id
+                                            diagnosis = ""
+                                            treatment = ""
+                                            medications = ""
+                                            notes = ""
+                                        },
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
+                                        shape = RoundedCornerShape(8.dp),
+                                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+                                        modifier = Modifier.height(32.dp)
+                                    ) {
+                                        Text("Selesai", color = White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                    }
+                                }
                             }
                         }
                     }
@@ -375,6 +402,94 @@ fun DoctorDashboardScreen(
                 Text("Keluar Akun", fontWeight = FontWeight.Bold, fontSize = 15.sp)
             }
         }
+    }
+
+    if (activeCompletingApptId != null) {
+        AlertDialog(
+            onDismissRequest = { activeCompletingApptId = null },
+            title = {
+                Text(
+                    text = "Input Rekam Medis Pasien",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    color = TextPrimary
+                )
+            },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .padding(vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        text = "Masukkan rekam medis pasien sebelum menyelesaikan janji temu.",
+                        fontSize = 13.sp,
+                        color = TextSecondary
+                    )
+
+                    OutlinedTextField(
+                        value = diagnosis,
+                        onValueChange = { diagnosis = it },
+                        label = { Text("Diagnosis Utama *") },
+                        placeholder = { Text("Tulis diagnosis utama...") },
+                        modifier = Modifier.fillMaxWidth(),
+                        maxLines = 3
+                    )
+
+                    OutlinedTextField(
+                        value = treatment,
+                        onValueChange = { treatment = it },
+                        label = { Text("Tindakan / Pengobatan") },
+                        placeholder = { Text("Tulis tindakan atau perawatan...") },
+                        modifier = Modifier.fillMaxWidth(),
+                        maxLines = 3
+                    )
+
+                    OutlinedTextField(
+                        value = medications,
+                        onValueChange = { medications = it },
+                        label = { Text("Resep Obat") },
+                        placeholder = { Text("Paracetamol 500mg, Amoxicillin...") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    OutlinedTextField(
+                        value = notes,
+                        onValueChange = { notes = it },
+                        label = { Text("Catatan Tambahan") },
+                        placeholder = { Text("Catatan tambahan...") },
+                        modifier = Modifier.fillMaxWidth(),
+                        maxLines = 2
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        val apptId = activeCompletingApptId ?: return@Button
+                        if (diagnosis.isNotBlank()) {
+                            onCompleteClick(apptId, diagnosis, treatment, medications, notes)
+                            activeCompletingApptId = null
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
+                    enabled = diagnosis.isNotBlank()
+                ) {
+                    Text("Simpan & Selesaikan", color = White)
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { activeCompletingApptId = null }
+                ) {
+                    Text("Batal", color = TextSecondary)
+                }
+            },
+            shape = RoundedCornerShape(16.dp),
+            containerColor = White
+        )
     }
 }
 
