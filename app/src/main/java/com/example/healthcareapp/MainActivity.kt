@@ -37,10 +37,11 @@ class MainActivity : ComponentActivity() {
             var currentUserName by remember { mutableStateOf("") }
 
             var showSplash by remember { mutableStateOf(true) }
+            var splashAnimationDone by remember { mutableStateOf(false) }
 
             // ================= NAVIGATION =================
             val backStack = remember {
-                mutableStateListOf<Any>()
+                mutableStateListOf<Any>(Routes.Login as Any)
             }
 
             // ================= PATIENT =================
@@ -93,14 +94,6 @@ class MainActivity : ComponentActivity() {
                                 birthDate = "2004-01-01",
                                 address = "Klaten, Indonesia"
                             )
-                            DataManager.addPatient(
-                                name = patient.name,
-                                email = patient.email,
-                                phone = patient.phone,
-                                gender = patient.gender,
-                                birthDate = patient.birthDate,
-                                address = patient.address
-                            )
                         }
                     }
 
@@ -130,10 +123,14 @@ class MainActivity : ComponentActivity() {
 
                 } else {
 
+                    backStack.clear()
                     backStack.add(Routes.Login)
                 }
 
                 isLoading = false
+                if (splashAnimationDone) {
+                    showSplash = false
+                }
             }
 
             LaunchedEffect(currentEmail) {
@@ -154,7 +151,8 @@ class MainActivity : ComponentActivity() {
                     repo.saveLoginSession(
                         user.email,
                         user.role,
-                        user.name
+                        user.name,
+                        user.token
                     )
 
                     isLoggedIn = true
@@ -176,14 +174,6 @@ class MainActivity : ComponentActivity() {
                                 gender = "Laki-laki",
                                 birthDate = "2004-01-01",
                                 address = "Klaten, Indonesia"
-                            )
-                            DataManager.addPatient(
-                                name = patient.name,
-                                email = patient.email,
-                                phone = patient.phone,
-                                gender = patient.gender,
-                                birthDate = patient.birthDate,
-                                address = patient.address
                             )
                         }
                     }
@@ -228,12 +218,20 @@ class MainActivity : ComponentActivity() {
             }
 
             // ================= UI =================
+            // Show splash until BOTH animation is done AND loading is done
+            val shouldShowSplash = showSplash || isLoading
+
             HealthcareTheme {
 
-                if (showSplash) {
+                if (shouldShowSplash) {
 
                     SplashScreen(
-                        onSplashFinished = { showSplash = false }
+                        onSplashFinished = {
+                            splashAnimationDone = true
+                            if (!isLoading) {
+                                showSplash = false
+                            }
+                        }
                     )
 
                 } else {
@@ -345,14 +343,8 @@ class MainActivity : ComponentActivity() {
                                     // ================= DOCTOR DASHBOARD =================
                                     is Routes.DoctorDashboard -> NavEntry(key) {
 
-                                        val user = viewModel.users.find {
-                                            it.email == currentEmail
-                                        }
-
-                                        val doctor = user?.doctorId?.let { id ->
-                                            viewModel.doctors.find {
-                                                it.id == id
-                                            }
+                                        val doctor = viewModel.doctors.find {
+                                            it.name.equals(currentUserName, ignoreCase = true)
                                         }
 
                                         val doctorAppointments =
@@ -376,10 +368,22 @@ class MainActivity : ComponentActivity() {
                                                 )
                                             },
                                             onAcceptClick = { apptId ->
-                                                DataManager.updateAppointmentStatus(apptId, "Upcoming")
+                                                coroutineScope.launch { DataManager.updateAppointmentStatus(apptId, "Upcoming") }
                                             },
                                             onRejectClick = { apptId ->
-                                                DataManager.updateAppointmentStatus(apptId, "Cancelled")
+                                                coroutineScope.launch { DataManager.updateAppointmentStatus(apptId, "Cancelled") }
+                                            },
+                                            onCompleteClick = { apptId, diagnosis, treatment, medications, notes ->
+                                                coroutineScope.launch {
+                                                    DataManager.updateAppointmentStatus(
+                                                        id = apptId,
+                                                        status = "Completed",
+                                                        diagnosis = diagnosis,
+                                                        treatment = treatment,
+                                                        medications = medications,
+                                                        notes = notes
+                                                    )
+                                                }
                                             },
                                             onProfileClick = {
                                                 backStack.add(Routes.DoctorProfile)
@@ -487,10 +491,12 @@ class MainActivity : ComponentActivity() {
                                             },
 
                                             onCancelClick = { appointment ->
-                                                DataManager.updateAppointmentStatus(
-                                                    appointment.id,
-                                                    "Cancelled"
-                                                )
+                                                coroutineScope.launch {
+                                                    DataManager.updateAppointmentStatus(
+                                                        appointment.id,
+                                                        "Cancelled"
+                                                    )
+                                                }
                                             }
                                         )
                                     }
@@ -539,14 +545,16 @@ class MainActivity : ComponentActivity() {
                                                     time,
                                                     symptoms ->
 
-                                                viewModel.addAppointment(
-                                                    patientName,
-                                                    patientEmail,
-                                                    doctorName,
-                                                    date,
-                                                    time,
-                                                    symptoms
-                                                )
+                                                coroutineScope.launch {
+                                                    DataManager.addAppointment(
+                                                        patientName,
+                                                        patientEmail,
+                                                        doctorName,
+                                                        date,
+                                                        time,
+                                                        symptoms
+                                                    )
+                                                }
                                             }
                                         )
                                     }
@@ -555,14 +563,31 @@ class MainActivity : ComponentActivity() {
                                     is Routes.HistoryList -> NavEntry(key) {
 
                                         HistoryScreen(
-
+                                            items = viewModel.historyItems,
+                                            onItemClick = { item ->
+                                                backStack.add(Routes.HistoryDetail(item.id))
+                                            },
                                             onBackClick = {
                                                 backStack.removeLastOrNull()
-                                            },
-
-                                            items = viewModel.historyItems
+                                            }
                                         )
                                     }
+
+                                    // ================= HISTORY DETAIL =================
+                                    is Routes.HistoryDetail -> NavEntry(key) {
+                                        val historyItem = viewModel.historyItems.find { it.id == key.id }
+                                        if (historyItem != null) {
+                                            HistoryDetailScreen(
+                                                historyItem = historyItem,
+                                                onBackClick = {
+                                                    backStack.removeLastOrNull()
+                                                }
+                                            )
+                                        } else {
+                                            Text("Detail rekam medis tidak ditemukan")
+                                        }
+                                    }
+
 
                                     // ================= PROFILE =================
                                     is Routes.Profile -> NavEntry(key) {
@@ -650,9 +675,8 @@ class MainActivity : ComponentActivity() {
 
                                     // ================= DOCTOR PROFILE =================
                                     is Routes.DoctorProfile -> NavEntry(key) {
-                                        val user = viewModel.users.find { it.email == currentEmail }
-                                        val doctor = user?.doctorId?.let { id ->
-                                            viewModel.doctors.find { it.id == id }
+                                        val doctor = viewModel.doctors.find {
+                                            it.name.equals(currentUserName, ignoreCase = true)
                                         }
                                         if (doctor != null) {
                                             DoctorProfileScreen(
@@ -675,15 +699,14 @@ class MainActivity : ComponentActivity() {
 
                                     // ================= DOCTOR EDIT PROFILE =================
                                     is Routes.DoctorEditProfile -> NavEntry(key) {
-                                        val user = viewModel.users.find { it.email == currentEmail }
-                                        val doctor = user?.doctorId?.let { id ->
-                                            viewModel.doctors.find { it.id == id }
+                                        val doctor = viewModel.doctors.find {
+                                            it.name.equals(currentUserName, ignoreCase = true)
                                         }
                                         if (doctor != null) {
                                             DoctorEditProfileScreen(
                                                 doctor = doctor,
                                                 onSaveClick = { name, spec, desc, sched ->
-                                                    DataManager.updateDoctor(doctor.id, name, spec, desc, sched)
+                                                     coroutineScope.launch { DataManager.updateDoctor(doctor.id, name, spec, desc, sched) }
                                                     backStack.removeLastOrNull()
                                                 },
                                                 onBackClick = {

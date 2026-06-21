@@ -52,7 +52,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "healthcare_db"
                 )
                     .addCallback(PrepopulateCallback())
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                 INSTANCE = instance
                 instance

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +36,7 @@ fun AdminDashboardScreen(
     // Tab Navigation State
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf("Ringkasan", "Dokter", "Pasien", "Appointment")
+    val scope = rememberCoroutineScope()
 
     // Search query states
     var doctorSearchQuery by remember { mutableStateOf("") }
@@ -353,10 +355,10 @@ fun AdminDashboardScreen(
                                     AdminAppointmentItem(
                                         appointment = appt,
                                         onApproveClick = {
-                                            DataManager.updateAppointmentStatus(appt.id, "Upcoming")
+                                            scope.launch { DataManager.updateAppointmentStatus(appt.id, "Upcoming") }
                                         },
                                         onRejectClick = {
-                                            DataManager.updateAppointmentStatus(appt.id, "Cancelled")
+                                            scope.launch { DataManager.updateAppointmentStatus(appt.id, "Cancelled") }
                                         }
                                     )
                                 }
@@ -376,7 +378,7 @@ fun AdminDashboardScreen(
             title = "Tambah Dokter Baru",
             onDismiss = { showAddDoctorDialog = false },
             onConfirm = { name, specialization, description, scheduleList ->
-                DataManager.addDoctor(name, specialization, description, scheduleList)
+                                scope.launch { DataManager.addDoctor(name, specialization, description, scheduleList) }
                 showAddDoctorDialog = false
             }
         )
@@ -389,7 +391,7 @@ fun AdminDashboardScreen(
             doctor = doctorToEdit,
             onDismiss = { doctorToEdit = null },
             onConfirm = { name, specialization, description, scheduleList ->
-                DataManager.updateDoctor(doctorToEdit!!.id, name, specialization, description, scheduleList)
+                                scope.launch { DataManager.updateDoctor(doctorToEdit!!.id, name, specialization, description, scheduleList) }
                 doctorToEdit = null
             }
         )
@@ -404,7 +406,7 @@ fun AdminDashboardScreen(
             confirmButton = {
                 Button(
                     onClick = {
-                        DataManager.deleteDoctor(doctorToDelete!!.id)
+                                                scope.launch { DataManager.deleteDoctor(doctorToDelete!!.id) }
                         doctorToDelete = null
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = AccentRed)
@@ -426,7 +428,7 @@ fun AdminDashboardScreen(
             title = "Tambah Pasien Baru",
             onDismiss = { showAddPatientDialog = false },
             onConfirm = { name, email, phone, gender, birthDate, address ->
-                DataManager.addPatient(name, email, phone, gender, birthDate, address)
+                                scope.launch { DataManager.addPatient(name, email, phone, gender, birthDate, address) }
                 showAddPatientDialog = false
             }
         )
@@ -439,7 +441,7 @@ fun AdminDashboardScreen(
             patient = patientToEdit,
             onDismiss = { patientToEdit = null },
             onConfirm = { name, email, phone, gender, birthDate, address ->
-                DataManager.updatePatient(patientToEdit!!.id, name, email, phone, gender, birthDate, address)
+                                scope.launch { DataManager.updatePatient(patientToEdit!!.id, name, email, phone, gender, birthDate, address) }
                 patientToEdit = null
             }
         )
@@ -454,7 +456,7 @@ fun AdminDashboardScreen(
             confirmButton = {
                 Button(
                     onClick = {
-                        DataManager.deletePatient(patientToDelete!!.id)
+                                                scope.launch { DataManager.deletePatient(patientToDelete!!.id) }
                         patientToDelete = null
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = AccentRed)

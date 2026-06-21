@@ -25,6 +25,7 @@ class UserPreferencesRepository(private val context: Context) {
         val USER_EMAIL = stringPreferencesKey("user_email")
         val USER_ROLE = stringPreferencesKey("user_role")
         val USER_NAME = stringPreferencesKey("user_name")
+        val AUTH_TOKEN = stringPreferencesKey("auth_token")
     }
 
     val isLoggedIn: Flow<Boolean> = context.dataStore.data.map { preferences ->
@@ -38,7 +39,7 @@ class UserPreferencesRepository(private val context: Context) {
     val currentUserRole: Flow<UserRole?> = context.dataStore.data.map { preferences ->
         val roleStr = preferences[PreferencesKeys.USER_ROLE]
         if (roleStr != null) {
-            try { UserRole.valueOf(roleStr) } catch (e: Exception) { null }
+            try { UserRole.valueOf(roleStr.uppercase()) } catch (e: Exception) { null }
         } else null
     }
 
@@ -46,12 +47,17 @@ class UserPreferencesRepository(private val context: Context) {
         preferences[PreferencesKeys.USER_NAME] ?: ""
     }
 
-    suspend fun saveLoginSession(email: String, role: UserRole, name: String) {
+    val authToken: Flow<String> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.AUTH_TOKEN] ?: ""
+    }
+
+    suspend fun saveLoginSession(email: String, role: UserRole, name: String, token: String) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.IS_LOGGED_IN] = true
             preferences[PreferencesKeys.USER_EMAIL] = email
             preferences[PreferencesKeys.USER_ROLE] = role.name
             preferences[PreferencesKeys.USER_NAME] = name
+            preferences[PreferencesKeys.AUTH_TOKEN] = token
         }
     }
 
@@ -61,6 +67,7 @@ class UserPreferencesRepository(private val context: Context) {
             preferences.remove(PreferencesKeys.USER_EMAIL)
             preferences.remove(PreferencesKeys.USER_ROLE)
             preferences.remove(PreferencesKeys.USER_NAME)
+            preferences.remove(PreferencesKeys.AUTH_TOKEN)
         }
     }
 }

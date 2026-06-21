@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +35,7 @@ fun RegisterScreen(
 ) {
     // Step: 0 = Data Diri, 1 = Data Akun
     var currentStep by remember { mutableStateOf(0) }
+    val scope = rememberCoroutineScope()
 
     // Step 1 fields
     var fullName by remember { mutableStateOf("") }
@@ -409,27 +411,28 @@ fun RegisterScreen(
                                             errorMessage = "Format email tidak valid"
                                         password.length < 6 -> errorMessage = "Password minimal 6 karakter"
                                         password != confirmPassword -> errorMessage = "Password tidak cocok"
-                                        DataManager.users.any {
-                                            it.email.equals(email, ignoreCase = true)
-                                        } -> errorMessage = "Email sudah terdaftar"
                                         else -> {
-                                            DataManager.addPatient(
-                                                name = fullName,
-                                                email = email,
-                                                phone = phone,
-                                                gender = gender,
-                                                birthDate = birthDate,
-                                                address = address,
-                                                password = password,
-                                                onComplete = {
+                                            scope.launch {
+                                                val success = DataManager.addPatient(
+                                                    name = fullName,
+                                                    email = email,
+                                                    phone = phone,
+                                                    gender = gender,
+                                                    birthDate = birthDate,
+                                                    address = address,
+                                                    password = password
+                                                )
+                                                if (success) {
                                                     val newUser = DataManager.authenticate(email, password)
                                                     if (newUser != null) {
                                                         onRegisterSuccess(newUser)
                                                     } else {
                                                         errorMessage = "Gagal masuk otomatis. Silakan masuk manual."
                                                     }
+                                                } else {
+                                                    errorMessage = "Registrasi gagal. Email mungkin sudah terdaftar."
                                                 }
-                                            )
+                                            }
                                         }
                                     }
                                 },
