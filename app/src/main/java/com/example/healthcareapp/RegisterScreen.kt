@@ -32,17 +32,14 @@ fun RegisterScreen(
     onRegisterSuccess: (User) -> Unit,
     onBackToLogin: () -> Unit
 ) {
-    // Step: 0 = Data Diri, 1 = Data Akun
     var currentStep by remember { mutableStateOf(0) }
 
-    // Step 1 fields
     var fullName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("Laki-laki") }
     var birthDate by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
 
-    // Step 2 fields
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -51,8 +48,9 @@ fun RegisterScreen(
 
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
+    // Header Register pakai warna sedikit berbeda dari Login
     val headerGradient = Brush.verticalGradient(
-        colors = listOf(Color(0xFF1565C0), Color(0xFF0D47A1))
+        colors = listOf(Color(0xFF1976D2), Color(0xFF1248A0))
     )
 
     val fieldColors = OutlinedTextFieldDefaults.colors(
@@ -85,15 +83,22 @@ fun RegisterScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Surface(
-                        shape = CircleShape,
-                        color = Color.White.copy(alpha = 0.15f),
-                        modifier = Modifier.size(68.dp)
+
+                    // Logo pakai logo_b (warna berbeda dari login)
+                    Box(
+                        modifier = Modifier
+                            .size(78.dp)
+                            .clip(CircleShape)
+                            .background(Color.White.copy(alpha = 0.0f)),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                            Text("🏥", fontSize = 30.sp)
-                        }
+                        LogoImage(
+                            drawableResId = R.drawable.logo_p,
+                            sizeDp = 100,
+                            paddingDp = 3
+                        )
                     }
+
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         "Buat Akun Baru",
@@ -110,7 +115,7 @@ fun RegisterScreen(
                 }
             }
 
-            // ── STEPPER INDICATOR ──
+            // ── STEPPER CARD ──
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,7 +141,6 @@ fun RegisterScreen(
                             isDone = currentStep > 0,
                             modifier = Modifier.weight(1f)
                         )
-                        // Connector line
                         Box(
                             modifier = Modifier
                                 .weight(0.5f)
@@ -208,7 +212,6 @@ fun RegisterScreen(
                                 shape = fieldShape
                             )
 
-                            // Gender Selector
                             Column {
                                 Text(
                                     "Jenis Kelamin",
@@ -276,11 +279,7 @@ fun RegisterScreen(
                                 colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
                                 shape = RoundedCornerShape(14.dp)
                             ) {
-                                Text(
-                                    "Lanjut →",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 15.sp
-                                )
+                                Text("Lanjut →", fontWeight = FontWeight.Bold, fontSize = 15.sp)
                             }
                         }
                     }
@@ -340,7 +339,9 @@ fun RegisterScreen(
                                     VisualTransformation.None else PasswordVisualTransformation(),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                                 trailingIcon = {
-                                    IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
+                                    IconButton(onClick = {
+                                        confirmPasswordVisible = !confirmPasswordVisible
+                                    }) {
                                         Icon(
                                             imageVector = if (confirmPasswordVisible)
                                                 Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
@@ -354,7 +355,6 @@ fun RegisterScreen(
                                 shape = fieldShape
                             )
 
-                            // Password match indicator
                             if (confirmPassword.isNotBlank()) {
                                 val match = password == confirmPassword
                                 Row(
@@ -380,7 +380,6 @@ fun RegisterScreen(
 
                             Spacer(modifier = Modifier.height(4.dp))
 
-                            // Password strength hint
                             Surface(
                                 shape = RoundedCornerShape(10.dp),
                                 color = Color(0xFFEEF4FF),
@@ -404,11 +403,15 @@ fun RegisterScreen(
                             Button(
                                 onClick = {
                                     when {
-                                        email.isBlank() -> errorMessage = "Email wajib diisi"
-                                        !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
+                                        email.isBlank() ->
+                                            errorMessage = "Email wajib diisi"
+                                        !android.util.Patterns.EMAIL_ADDRESS
+                                            .matcher(email).matches() ->
                                             errorMessage = "Format email tidak valid"
-                                        password.length < 6 -> errorMessage = "Password minimal 6 karakter"
-                                        password != confirmPassword -> errorMessage = "Password tidak cocok"
+                                        password.length < 6 ->
+                                            errorMessage = "Password minimal 6 karakter"
+                                        password != confirmPassword ->
+                                            errorMessage = "Password tidak cocok"
                                         DataManager.users.any {
                                             it.email.equals(email, ignoreCase = true)
                                         } -> errorMessage = "Email sudah terdaftar"
@@ -419,17 +422,24 @@ fun RegisterScreen(
                                                 phone = phone,
                                                 gender = gender,
                                                 birthDate = birthDate,
-                                                address = address,
-                                                password = password,
-                                                onComplete = {
-                                                    val newUser = DataManager.authenticate(email, password)
-                                                    if (newUser != null) {
-                                                        onRegisterSuccess(newUser)
-                                                    } else {
-                                                        errorMessage = "Gagal masuk otomatis. Silakan masuk manual."
-                                                    }
-                                                }
+                                                address = address
                                             )
+                                            val userIndex = DataManager.users.indexOfFirst {
+                                                it.email.equals(email, ignoreCase = true)
+                                            }
+                                            if (userIndex != -1) {
+                                                DataManager.users[userIndex] =
+                                                    DataManager.users[userIndex].copy(
+                                                        password = password
+                                                    )
+                                            }
+                                            val newUser = DataManager.authenticate(email, password)
+                                            if (newUser != null) {
+                                                onRegisterSuccess(newUser)
+                                            } else {
+                                                errorMessage =
+                                                    "Gagal masuk otomatis. Silakan masuk manual."
+                                            }
                                         }
                                     }
                                 },
@@ -452,9 +462,7 @@ fun RegisterScreen(
                                     .fillMaxWidth()
                                     .height(48.dp),
                                 shape = RoundedCornerShape(14.dp),
-                                border = androidx.compose.foundation.BorderStroke(
-                                    1.dp, TextHint
-                                )
+                                border = androidx.compose.foundation.BorderStroke(1.dp, TextHint)
                             ) {
                                 Text("← Kembali", color = TextSecondary, fontSize = 14.sp)
                             }
@@ -463,7 +471,6 @@ fun RegisterScreen(
                 }
             }
 
-            // ── LINK KE LOGIN ──
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
