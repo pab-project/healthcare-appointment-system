@@ -68,7 +68,6 @@ fun LoginScreen(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-                    // Logo pakai logo_healthcare
                     Box(
                         modifier = Modifier
                             .size(90.dp)
@@ -113,7 +112,7 @@ fun LoginScreen(
 
                     Text(
                         "Masuk",
-                        fontSize = 22.sp,
+                        fontSize = 25.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextPrimary
                     )
@@ -176,7 +175,10 @@ fun LoginScreen(
                             focusedLabelColor = PrimaryBlue,
                             focusedContainerColor = White,
                             unfocusedContainerColor = White,
-                            errorContainerColor = Color(0xFFFFF0F0)
+                            errorContainerColor = Color(0xFFFFF0F0),
+                            focusedTextColor = Color.Black,
+                            unfocusedTextColor = Color.Black
+
                         ),
                         isError = errorMessage != null
                     )
@@ -346,7 +348,9 @@ private fun LoginTextField(
             focusedLabelColor = PrimaryBlue,
             focusedContainerColor = White,
             unfocusedContainerColor = White,
-            errorContainerColor = Color(0xFFFFF0F0)
+            errorContainerColor = Color(0xFFFFF0F0),
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black
         ),
         isError = isError
     )

@@ -59,7 +59,9 @@ fun RegisterScreen(
         focusedLabelColor = PrimaryBlue,
         focusedContainerColor = White,
         unfocusedContainerColor = White,
-        errorContainerColor = Color(0xFFFFF0F0)
+        errorContainerColor = Color(0xFFFFF0F0),
+        focusedTextColor = Color.Black,
+        unfocusedTextColor = Color.Black
     )
     val fieldShape = RoundedCornerShape(14.dp)
 
@@ -84,7 +86,6 @@ fun RegisterScreen(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-                    // Logo pakai logo_b (warna berbeda dari login)
                     Box(
                         modifier = Modifier
                             .size(78.dp)
