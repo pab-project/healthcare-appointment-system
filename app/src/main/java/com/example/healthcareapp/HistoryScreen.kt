@@ -1,6 +1,7 @@
 package com.example.healthcareapp
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun HistoryScreen(
     items: List<HistoryItem>,
+    onItemClick: (HistoryItem) -> Unit,
     onBackClick: () -> Unit
 ) {
     Scaffold(
@@ -98,7 +100,7 @@ fun HistoryScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(items) { item ->
-                        HistoryCard(item)
+                        HistoryCard(item, onClick = { onItemClick(item) })
                     }
                 }
             }
@@ -107,9 +109,11 @@ fun HistoryScreen(
 }
 
 @Composable
-fun HistoryCard(item: HistoryItem) {
+fun HistoryCard(item: HistoryItem, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -187,6 +191,7 @@ fun HistoryScreenPreview() {
     MaterialTheme {
         HistoryScreen(
             items = dummyData,
+            onItemClick = {},
             onBackClick = {}
         )
     }

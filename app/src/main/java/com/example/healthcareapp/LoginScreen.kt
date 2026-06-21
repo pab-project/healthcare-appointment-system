@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
@@ -42,6 +43,7 @@ fun LoginScreen(
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var isLoading by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val scope = rememberCoroutineScope()
 
     val headerGradient = Brush.verticalGradient(
         colors = listOf(Color(0xFF1565C0), Color(0xFF0D47A1))
@@ -226,13 +228,15 @@ fun LoginScreen(
                                 return@Button
                             }
                             isLoading = true
-                            val user = DataManager.authenticate(email.trim(), password)
-                            isLoading = false
-                            if (user != null) {
-                                errorMessage = null
-                                onLoginSuccess(user)
-                            } else {
-                                errorMessage = "Email atau password salah"
+                            scope.launch {
+                                val user = DataManager.authenticate(email.trim(), password)
+                                isLoading = false
+                                if (user != null) {
+                                    errorMessage = null
+                                    onLoginSuccess(user)
+                                } else {
+                                    errorMessage = "Email atau password salah"
+                                }
                             }
                         },
                         modifier = Modifier
@@ -290,30 +294,6 @@ fun LoginScreen(
                             fontSize = 15.sp
                         )
                     }
-                }
-            }
-
-            // ── DEMO AKUN ──
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 4.dp, bottom = 24.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFEEF4FF)),
-                elevation = CardDefaults.cardElevation(0.dp)
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        "🔑  Akun Demo",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 13.sp,
-                        color = PrimaryBlue
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    DemoAccountRow("👨‍💼", "Admin", "admin@healthcare.com", "admin123")
-                    DemoAccountRow("👨‍⚕️", "Dokter", "andi@healthcare.com", "dokter123")
-                    DemoAccountRow("🧑", "Pasien", "berly@healthcare.com", "pasien123")
                 }
             }
 

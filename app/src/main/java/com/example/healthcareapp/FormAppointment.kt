@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,12 +37,45 @@ fun FormAppointment(
 
     var doctorExpanded by remember { mutableStateOf(false) }
     var timeExpanded by remember { mutableStateOf(false) }
+    var dateExpanded by remember { mutableStateOf(false) }
 
     var showSuccessDialog by remember { mutableStateOf(false) }
     var showErrorDialog by remember { mutableStateOf(false) }
 
+    // Dynamic slot states
+    var availableSlots by remember { mutableStateOf<List<com.example.healthcareapp.network.TimeSlotResponse>>(emptyList()) }
+    var isLoadingSlots by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    fun formatDate(apiDate: String): String {
+        return try {
+            val parts = apiDate.split("-")
+            if (parts.size == 3) "${parts[2]}/${parts[1]}/${parts[0]}" else apiDate
+        } catch (e: Exception) {
+            apiDate
+        }
+    }
+
     val doctorOptions = DataManager.doctors.map { "${it.name} (${it.specialization})" }
-    val timeOptions = listOf("08:00 - 09:00", "09:30 - 10:30", "11:00 - 12:00", "13:30 - 14:30", "15:00 - 16:00")
+
+    val dateOptions = availableSlots.map { formatDate(it.date) }.distinct()
+
+    val targetApiDate = try {
+        val parts = date.split("/")
+        if (parts.size == 3) "${parts[2]}-${parts[1]}-${parts[0]}" else date
+    } catch (e: Exception) {
+        date
+    }
+
+    val timeOptions = availableSlots
+        .filter { it.date == targetApiDate }
+        .map { slot ->
+            val start = slot.startTime.substring(0, 5)
+            val end = slot.endTime.substring(0, 5)
+            "$start - $end"
+        }
+        .distinct()
+
 
     val textFieldColors = OutlinedTextFieldDefaults.colors(
         focusedBorderColor = PrimaryBlue,
@@ -170,48 +205,89 @@ fun FormAppointment(
                         doctorOptions.forEach { doc ->
                             DropdownMenuItem(
                                 text = { Text(doc) },
-                                onClick = { selectedDoctor = doc; doctorExpanded = false }
+                                onClick = {
+                                    selectedDoctor = doc
+                                    doctorExpanded = false
+                                    date = ""
+                                    selectedTime = ""
+                                    availableSlots = emptyList()
+                                    val cleanDocName = if (doc.contains("(")) doc.substringBefore("(").trim() else doc
+                                    val matchedDoctor = DataManager.doctors.find { it.name.equals(cleanDocName, ignoreCase = true) }
+                                    if (matchedDoctor != null) {
+                                        isLoadingSlots = true
+                                        coroutineScope.launch {
+                                            availableSlots = DataManager.getDoctorSlots(matchedDoctor.id)
+                                            isLoadingSlots = false
+                                        }
+                                    }
+                                }
                             )
                         }
                     }
                 }
 
                 Row(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedTextField(
-                        value = date,
-                        onValueChange = { newValue ->
-                            val digits = newValue.filter { it.isDigit() }
-                            if (digits.length <= 8) {
-                                var d = ""; var m = ""
-                                if (digits.length >= 2) d = digits.substring(0, 2)
-                                if (digits.length >= 4) m = digits.substring(2, 4)
-                                if ((d.isEmpty() || (d.toIntOrNull() ?: 0) <= 31) && (m.isEmpty() || (m.toIntOrNull() ?: 0) <= 12)) {
-                                    var formatted = ""
-                                    for (i in digits.indices) {
-                                        formatted += digits[i]
-                                        if ((i == 1 || i == 3) && i != digits.lastIndex) formatted += "/"
-                                    }
-                                    date = formatted
-                                }
+                    ExposedDropdownMenuBox(
+                        expanded = dateExpanded,
+                        onExpandedChange = {
+                            if (selectedDoctor.isNotEmpty() && !isLoadingSlots && dateOptions.isNotEmpty()) {
+                                dateExpanded = it
                             }
                         },
-                        label = { Text("📅 Tanggal") },
-                        modifier = Modifier.weight(1f),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        colors = textFieldColors,
-                        shape = RoundedCornerShape(12.dp)
-                    )
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        val dateLabel = when {
+                            selectedDoctor.isEmpty() -> "Pilih Dokter"
+                            isLoadingSlots -> "Memuat..."
+                            dateOptions.isEmpty() -> "Tidak Ada Jadwal"
+                            else -> date.ifEmpty { "📅 Tanggal" }
+                        }
+                        OutlinedTextField(
+                            value = if (date.isEmpty() && dateLabel != "📅 Tanggal") "" else date,
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text(dateLabel) },
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dateExpanded) },
+                            modifier = Modifier.menuAnchor().fillMaxWidth(),
+                            colors = textFieldColors,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        ExposedDropdownMenu(
+                            expanded = dateExpanded,
+                            onDismissRequest = { dateExpanded = false }
+                        ) {
+                            dateOptions.forEach { d ->
+                                DropdownMenuItem(
+                                    text = { Text(d) },
+                                    onClick = {
+                                        date = d
+                                        selectedTime = ""
+                                        dateExpanded = false
+                                    }
+                                )
+                            }
+                        }
+                    }
 
                     ExposedDropdownMenuBox(
                         expanded = timeExpanded,
-                        onExpandedChange = { timeExpanded = it },
+                        onExpandedChange = {
+                            if (date.isNotEmpty() && timeOptions.isNotEmpty()) {
+                                timeExpanded = it
+                            }
+                        },
                         modifier = Modifier.weight(1f)
                     ) {
+                        val timeLabel = when {
+                            date.isEmpty() -> "Pilih Tanggal"
+                            timeOptions.isEmpty() -> "Tidak Ada Jam"
+                            else -> selectedTime.ifEmpty { "🕒 Jam" }
+                        }
                         OutlinedTextField(
-                            value = selectedTime,
+                            value = if (selectedTime.isEmpty() && timeLabel != "🕒 Jam") "" else selectedTime,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("🕒 Jam") },
+                            label = { Text(timeLabel) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = timeExpanded) },
                             modifier = Modifier.menuAnchor().fillMaxWidth(),
                             colors = textFieldColors,
@@ -230,6 +306,7 @@ fun FormAppointment(
                         }
                     }
                 }
+
 
                 OutlinedTextField(
                     value = symptoms,
