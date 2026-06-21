@@ -11,27 +11,27 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import androidx.compose.foundation.Image
 
 @Composable
 fun SplashScreen(onSplashFinished: () -> Unit) {
 
-    // Animasi scale untuk logo
     val scale = remember { Animatable(0.5f) }
-    // Animasi alpha untuk teks
     val alpha = remember { Animatable(0f) }
-    // Animasi alpha untuk tagline (muncul belakangan)
     val taglineAlpha = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
-        // 1. Logo muncul dengan efek bounce
         scale.animateTo(
             targetValue = 1f,
             animationSpec = spring(
@@ -39,17 +39,14 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
                 stiffness = Spring.StiffnessLow
             )
         )
-        // 2. Teks utama fade in
         alpha.animateTo(
             targetValue = 1f,
             animationSpec = tween(durationMillis = 500)
         )
-        // 3. Tagline muncul setelahnya
         taglineAlpha.animateTo(
             targetValue = 1f,
             animationSpec = tween(durationMillis = 600)
         )
-        // 4. Tahan 1.5 detik lalu lanjut
         delay(1500L)
         onSplashFinished()
     }
@@ -72,24 +69,30 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
             verticalArrangement = Arrangement.Center
         ) {
 
-            // Logo / Ikon Aplikasi
-            Surface(
-                shape = CircleShape,
-                color = Color.White.copy(alpha = 0.15f),
+            // ── LOGO GAMBAR ──
+            Box(
                 modifier = Modifier
-                    .size(120.dp)
+                    .size(140.dp)
                     .scale(scale.value)
+                    .clip(CircleShape)
+                    .background(Color.White.copy(alpha = 0.00f)),
+                contentAlignment = Alignment.Center
             ) {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                    Text("🏥", fontSize = 56.sp)
-                }
+                Image(
+                    painter = painterResource(id = R.drawable.logo_p),
+                    contentDescription = "Logo HealthCare",
+                    modifier = Modifier
+                        .size(125.dp)
+                        .padding(4.dp),
+                    contentScale = ContentScale.Fit
+                )
             }
 
             Spacer(modifier = Modifier.height(28.dp))
 
-            // Nama Aplikasi
+            // ── NAMA APLIKASI ──
             Text(
-                text = "HealthCare",
+                text = "Medsync Clinic",
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
@@ -98,9 +101,9 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Tagline
+            // ── TAGLINE ──
             Text(
-                text = "Appointment & Medical Record System",
+                text = "Kesehatan Anda, Lebih Mudah.",
                 fontSize = 13.sp,
                 color = Color.White.copy(alpha = 0.75f),
                 modifier = Modifier.alpha(taglineAlpha.value)
@@ -108,11 +111,11 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Loading dots animasi
+            // ── LOADING DOTS ──
             LoadingDots(modifier = Modifier.alpha(taglineAlpha.value))
         }
 
-        // Versi aplikasi di bawah
+        // ── VERSI APP ──
         Text(
             text = "v1.0.0",
             fontSize = 12.sp,
@@ -129,7 +132,6 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
 private fun LoadingDots(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "dots")
 
-    // Masing-masing dot punya delay berbeda
     val dot1Alpha by infiniteTransition.animateFloat(
         initialValue = 0.3f, targetValue = 1f,
         animationSpec = infiniteRepeatable(

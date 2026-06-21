@@ -26,7 +26,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -70,15 +69,21 @@ fun LoginScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Surface(
-                        shape = CircleShape,
-                        color = Color.White.copy(alpha = 0.15f),
-                        modifier = Modifier.size(80.dp)
+
+                    Box(
+                        modifier = Modifier
+                            .size(90.dp)
+                            .clip(CircleShape)
+                            .background(Color.White.copy(alpha = 0.0f)),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                            Text("🏥", fontSize = 36.sp)
-                        }
+                        LogoImage(
+                            drawableResId = R.drawable.logo_p,
+                            sizeDp = 100,
+                            paddingDp = 3
+                        )
                     }
+
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         "HealthCare",
@@ -109,7 +114,7 @@ fun LoginScreen(
 
                     Text(
                         "Masuk",
-                        fontSize = 22.sp,
+                        fontSize = 25.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextPrimary
                     )
@@ -172,7 +177,10 @@ fun LoginScreen(
                             focusedLabelColor = PrimaryBlue,
                             focusedContainerColor = White,
                             unfocusedContainerColor = White,
-                            errorContainerColor = Color(0xFFFFF0F0)
+                            errorContainerColor = Color(0xFFFFF0F0),
+                            focusedTextColor = Color.Black,
+                            unfocusedTextColor = Color.Black
+
                         ),
                         isError = errorMessage != null
                     )
@@ -199,7 +207,6 @@ fun LoginScreen(
                         }
                     }
 
-                    // Lupa Password
                     TextButton(
                         onClick = onForgotPasswordClick,
                         modifier = Modifier.align(Alignment.End)
@@ -214,7 +221,6 @@ fun LoginScreen(
 
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    // Tombol Login
                     Button(
                         onClick = {
                             if (email.isBlank() || password.isBlank()) {
@@ -256,7 +262,6 @@ fun LoginScreen(
                         }
                     }
 
-                    // Divider
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -267,27 +272,20 @@ fun LoginScreen(
                             modifier = Modifier.weight(1f),
                             color = TextHint.copy(alpha = 0.5f)
                         )
-                        Text(
-                            "  atau  ",
-                            color = TextSecondary,
-                            fontSize = 12.sp
-                        )
+                        Text("  atau  ", color = TextSecondary, fontSize = 12.sp)
                         HorizontalDivider(
                             modifier = Modifier.weight(1f),
                             color = TextHint.copy(alpha = 0.5f)
                         )
                     }
 
-                    // Tombol Register
                     OutlinedButton(
                         onClick = onRegisterClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp),
-                        border = androidx.compose.foundation.BorderStroke(
-                            1.dp, PrimaryBlue
-                        )
+                        border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryBlue)
                     ) {
                         Text(
                             "Daftar Akun Baru",
@@ -330,7 +328,9 @@ private fun LoginTextField(
             focusedLabelColor = PrimaryBlue,
             focusedContainerColor = White,
             unfocusedContainerColor = White,
-            errorContainerColor = Color(0xFFFFF0F0)
+            errorContainerColor = Color(0xFFFFF0F0),
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black
         ),
         isError = isError
     )
@@ -348,11 +348,7 @@ private fun DemoAccountRow(emoji: String, role: String, email: String, password:
         Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(role, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary)
-            Text(
-                "$email  /  $password",
-                fontSize = 11.sp,
-                color = TextSecondary
-            )
+            Text("$email  /  $password", fontSize = 11.sp, color = TextSecondary)
         }
     }
 }
