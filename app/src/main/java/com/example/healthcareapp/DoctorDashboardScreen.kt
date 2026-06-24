@@ -33,6 +33,7 @@ fun DoctorDashboardScreen(
     onRejectClick: (Int) -> Unit = {},
     onCompleteClick: (Int, String, String, String, String) -> Unit = { _, _, _, _, _ -> },
     onProfileClick: () -> Unit = {},
+    onTimeslotsClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
     onLogoutClick: () -> Unit
 ) {
@@ -183,8 +184,8 @@ fun DoctorDashboardScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text("Jadwal Praktik", fontWeight = FontWeight.Bold, fontSize = 14.sp, color = TextPrimary)
-                                TextButton(onClick = onProfileClick, contentPadding = PaddingValues(0.dp)) {
-                                    Text("Ubah Jadwal", fontSize = 12.sp, color = Color(0xFF2E7D32))
+                                TextButton(onClick = onTimeslotsClick, contentPadding = PaddingValues(0.dp)) {
+                                    Text("Kelola Jadwal", fontSize = 12.sp, color = Color(0xFF2E7D32))
                                 }
                             }
                             Spacer(Modifier.height(8.dp))

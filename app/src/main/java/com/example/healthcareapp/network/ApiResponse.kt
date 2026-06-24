@@ -39,7 +39,8 @@ data class DoctorResponse(
     val specialization: String,
     val phone: String?,
     val bio: String?,
-    @SerializedName("is_active") val isActive: Boolean
+    @SerializedName("is_active") val isActive: Boolean,
+    val schedule: List<String>? = null
 )
 
 data class DoctorListResponse(
@@ -63,6 +64,12 @@ data class TimeSlotResponse(
 data class TimeSlotListResponse(
     val status: String,
     val data: List<TimeSlotResponse>
+)
+
+data class SingleTimeSlotResponse(
+    val status: String,
+    val message: String?,
+    val data: TimeSlotResponse?
 )
 
 data class PatientResponse(

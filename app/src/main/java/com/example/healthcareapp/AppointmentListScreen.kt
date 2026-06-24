@@ -273,7 +273,9 @@ fun AppointmentListScreen(
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color(0xFF1565C0),
-                            focusedLabelColor = Color(0xFF1565C0)
+                            focusedLabelColor = Color(0xFF1565C0),
+                            focusedTextColor = TextPrimary,
+                            unfocusedTextColor = TextPrimary
                         )
                     )
 
@@ -294,7 +296,9 @@ fun AppointmentListScreen(
                             modifier = Modifier.menuAnchor().fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = Color(0xFF1565C0),
-                                focusedLabelColor = Color(0xFF1565C0)
+                                focusedLabelColor = Color(0xFF1565C0),
+                                focusedTextColor = TextPrimary,
+                                unfocusedTextColor = TextPrimary
                             )
                         )
                         ExposedDropdownMenu(

@@ -83,7 +83,9 @@ fun FormAppointment(
         focusedLabelColor = PrimaryBlue,
         unfocusedLabelColor = TextSecondary,
         focusedContainerColor = White,
-        unfocusedContainerColor = White
+        unfocusedContainerColor = White,
+        focusedTextColor = TextPrimary,
+        unfocusedTextColor = TextPrimary
     )
 
     Column(
