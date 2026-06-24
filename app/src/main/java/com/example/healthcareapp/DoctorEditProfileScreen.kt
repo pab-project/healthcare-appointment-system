@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.OutlinedTextFieldDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,8 +29,18 @@ fun DoctorEditProfileScreen(
     var specialization by remember { mutableStateOf(doctor.specialization) }
     var description by remember { mutableStateOf(doctor.description) }
     
-    // Convert list to newline separated text for easy editing
-    var scheduleText by remember { mutableStateOf(doctor.schedule.joinToString("\n")) }
+
+
+    val fieldColors = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = PrimaryBlue,
+        unfocusedBorderColor = TextHint,
+        focusedLabelColor = PrimaryBlue,
+        unfocusedLabelColor = TextSecondary,
+        focusedContainerColor = White,
+        unfocusedContainerColor = White,
+        focusedTextColor = TextPrimary,
+        unfocusedTextColor = TextPrimary
+    )
 
     var nameError by remember { mutableStateOf(false) }
     var specError by remember { mutableStateOf(false) }
@@ -81,7 +92,8 @@ fun DoctorEditProfileScreen(
                 },
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = fieldColors
             )
 
             // Spesialisasi
@@ -98,7 +110,8 @@ fun DoctorEditProfileScreen(
                 },
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = fieldColors
             )
 
             // Deskripsi / Biografi
@@ -109,23 +122,11 @@ fun DoctorEditProfileScreen(
                 minLines = 3,
                 maxLines = 5,
                 shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = fieldColors
             )
 
-            // Jadwal Praktik (Newline-separated)
-            OutlinedTextField(
-                value = scheduleText,
-                onValueChange = { scheduleText = it },
-                label = { Text("Jadwal Praktik (Satu per baris)") },
-                placeholder = { Text("Senin 08:00 - 12:00\nRabu 13:00 - 17:00") },
-                minLines = 4,
-                maxLines = 8,
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.fillMaxWidth(),
-                supportingText = {
-                    Text("Tulis setiap sesi jadwal di baris baru.", color = TextSecondary)
-                }
-            )
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -141,13 +142,7 @@ fun DoctorEditProfileScreen(
                         return@Button
                     }
                     
-                    // Convert newline separated text back to List
-                    val scheduleList = scheduleText
-                        .split("\n")
-                        .map { it.trim() }
-                        .filter { it.isNotEmpty() }
-                        
-                    onSaveClick(name, specialization, description, scheduleList)
+                    onSaveClick(name, specialization, description, emptyList())
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)), // Green Accent for doctor edit
                 shape = RoundedCornerShape(12.dp),

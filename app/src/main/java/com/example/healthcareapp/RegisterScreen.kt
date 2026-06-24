@@ -408,34 +408,42 @@ fun RegisterScreen(
                                     when {
                                         email.isBlank() ->
                                             errorMessage = "Email wajib diisi"
+
                                         !android.util.Patterns.EMAIL_ADDRESS
                                             .matcher(email).matches() ->
                                             errorMessage = "Format email tidak valid"
-password.length < 6 -> errorMessage = "Password minimal 6 karakter"
-password != confirmPassword -> errorMessage = "Password tidak cocok"
-else -> {
-    scope.launch {
-        val success = DataManager.addPatient(
-            name = fullName,
-            email = email,
-            phone = phone,
-            gender = gender,
-            birthDate = birthDate,
-            address = address,
-            password = password
-        )
-        if (success) {
-            val newUser = DataManager.authenticate(email, password)
-            if (newUser != null) {
-                onRegisterSuccess(newUser)
-            } else {
-                errorMessage = "Gagal masuk otomatis. Silakan masuk manual."
-            }
-        } else {
-            errorMessage = "Registrasi gagal. Email mungkin sudah terdaftar."
-        }
-    }
-}
+
+                                        password.length < 6 ->
+                                            errorMessage = "Password minimal 6 karakter"
+
+                                        password != confirmPassword ->
+                                            errorMessage = "Password tidak cocok"
+
+                                        else -> {
+                                            scope.launch {
+                                                val success = DataManager.addPatient(
+                                                    name = fullName,
+                                                    email = email,
+                                                    phone = phone,
+                                                    gender = gender,
+                                                    birthDate = birthDate,
+                                                    address = address,
+                                                    password = password
+                                                )
+
+                                                if (success) {
+                                                    val newUser = DataManager.authenticate(email, password)
+
+                                                    if (newUser != null) {
+                                                        onRegisterSuccess(newUser)
+                                                    } else {
+                                                        errorMessage =
+                                                            "Gagal masuk otomatis. Silakan masuk manual."
+                                                    }
+                                                } else {
+                                                    errorMessage =
+                                                        "Registrasi gagal. Email mungkin sudah terdaftar."
+                                                }
                                             }
                                         }
                                     }
@@ -443,11 +451,13 @@ else -> {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(52.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = PrimaryBlue
+                                ),
                                 shape = RoundedCornerShape(14.dp)
                             ) {
                                 Text(
-                                    "Daftar Sekarang",
+                                    text = "Daftar Sekarang",
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 15.sp
                                 )

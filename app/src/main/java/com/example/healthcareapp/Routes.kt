@@ -45,4 +45,8 @@ sealed class Routes {
     data object DoctorProfile : Routes()
     @Serializable
     data object DoctorEditProfile : Routes()
+    @Serializable
+    data class DoctorTimeslots(val doctorId: Int? = null, val doctorName: String? = null) : Routes()
+    @Serializable
+    data object ForgotPassword : Routes()
 }

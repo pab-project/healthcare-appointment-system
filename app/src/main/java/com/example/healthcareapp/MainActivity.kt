@@ -334,6 +334,10 @@ class MainActivity : ComponentActivity() {
                                                 backStack.add(Routes.AppointmentList)
                                             },
 
+                                            onManageDoctorScheduleClick = { doc ->
+                                                backStack.add(Routes.DoctorTimeslots(doctorId = doc.id, doctorName = doc.name))
+                                            },
+
                                             onLogoutClick = {
                                                 handleLogout()
                                             }
@@ -387,6 +391,9 @@ class MainActivity : ComponentActivity() {
                                             },
                                             onProfileClick = {
                                                 backStack.add(Routes.DoctorProfile)
+                                            },
+                                            onTimeslotsClick = {
+                                                backStack.add(Routes.DoctorTimeslots())
                                             },
                                             onNotificationClick = {
                                                 backStack.add(Routes.Notifications)
@@ -716,6 +723,17 @@ class MainActivity : ComponentActivity() {
                                         } else {
                                             Text("Dokter tidak ditemukan")
                                         }
+                                    }
+
+                                    // ================= DOCTOR TIMESLOTS =================
+                                    is Routes.DoctorTimeslots -> NavEntry(key) {
+                                        DoctorTimeslotScreen(
+                                            doctorId = key.doctorId,
+                                            doctorName = key.doctorName,
+                                            onBackClick = {
+                                                backStack.removeLastOrNull()
+                                            }
+                                        )
                                     }
 
                                     // ================= FALLBACK =================

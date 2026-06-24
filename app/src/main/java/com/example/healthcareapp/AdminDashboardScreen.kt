@@ -31,6 +31,7 @@ fun AdminDashboardScreen(
     totalPatients: Int,
     onDoctorListClick: () -> Unit = {},
     onAppointmentListClick: () -> Unit = {},
+    onManageDoctorScheduleClick: (Doctor) -> Unit = {},
     onLogoutClick: () -> Unit
 ) {
     // Tab Navigation State
@@ -225,7 +226,9 @@ fun AdminDashboardScreen(
                                 singleLine = true,
                                 colors = OutlinedTextFieldDefaults.colors(
                                     focusedBorderColor = AccentRed,
-                                    unfocusedBorderColor = TextHint
+                                    unfocusedBorderColor = TextHint,
+                                    focusedTextColor = TextPrimary,
+                                    unfocusedTextColor = TextPrimary
                                 )
                             )
                             Spacer(modifier = Modifier.width(12.dp))
@@ -249,7 +252,8 @@ fun AdminDashboardScreen(
                                     DoctorRowItem(
                                         doctor = doc,
                                         onEditClick = { doctorToEdit = doc },
-                                        onDeleteClick = { doctorToDelete = doc }
+                                        onDeleteClick = { doctorToDelete = doc },
+                                        onManageScheduleClick = { onManageDoctorScheduleClick(doc) }
                                     )
                                 }
                             }
@@ -278,7 +282,9 @@ fun AdminDashboardScreen(
                                 singleLine = true,
                                 colors = OutlinedTextFieldDefaults.colors(
                                     focusedBorderColor = AccentRed,
-                                    unfocusedBorderColor = TextHint
+                                    unfocusedBorderColor = TextHint,
+                                    focusedTextColor = TextPrimary,
+                                    unfocusedTextColor = TextPrimary
                                 )
                             )
                             Spacer(modifier = Modifier.width(12.dp))
@@ -520,7 +526,12 @@ fun AdminStatCard(emoji: String, label: String, value: String, color: Color, mod
 }
 
 @Composable
-fun DoctorRowItem(doctor: Doctor, onEditClick: () -> Unit, onDeleteClick: () -> Unit) {
+fun DoctorRowItem(
+    doctor: Doctor,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    onManageScheduleClick: () -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -535,6 +546,10 @@ fun DoctorRowItem(doctor: Doctor, onEditClick: () -> Unit, onDeleteClick: () -> 
             
             Spacer(modifier = Modifier.height(10.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                TextButton(onClick = onManageScheduleClick) {
+                    Text("📅 Jadwal", color = Color(0xFF2E7D32), fontWeight = FontWeight.Bold)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
                 TextButton(onClick = onEditClick) {
                     Text("✏️ Edit", color = PrimaryBlue, fontWeight = FontWeight.Bold)
                 }
@@ -678,11 +693,6 @@ fun DoctorFormDialog(
     var name by remember { mutableStateOf(doctor?.name ?: "") }
     var specialization by remember { mutableStateOf(doctor?.specialization ?: "Dokter Umum") }
     var description by remember { mutableStateOf(doctor?.description ?: "") }
-    
-    // Join schedule as comma-separated string for editing
-    var scheduleStr by remember { 
-        mutableStateOf(doctor?.schedule?.joinToString(", ") ?: "Senin 08:00 - 12:00, Rabu 13:00 - 17:00") 
-    }
 
     val poliOptions = listOf("Dokter Umum", "Dokter Gigi", "Dokter Anak", "Dokter Kulit", "Dokter Mata")
     var poliExpanded by remember { mutableStateOf(false) }
@@ -702,7 +712,14 @@ fun DoctorFormDialog(
                     onValueChange = { name = it },
                     label = { Text("Nama Dokter") },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentRed,
+                        unfocusedBorderColor = TextHint,
+                        focusedLabelColor = AccentRed
+                    )
                 )
 
                 ExposedDropdownMenuBox(
@@ -716,7 +733,14 @@ fun DoctorFormDialog(
                         readOnly = true,
                         label = { Text("Spesialisasi") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = poliExpanded) },
-                        modifier = Modifier.menuAnchor().fillMaxWidth()
+                        modifier = Modifier.menuAnchor().fillMaxWidth(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = TextPrimary,
+                            unfocusedTextColor = TextPrimary,
+                            focusedBorderColor = AccentRed,
+                            unfocusedBorderColor = TextHint,
+                            focusedLabelColor = AccentRed
+                        )
                     )
                     ExposedDropdownMenu(
                         expanded = poliExpanded,
@@ -738,14 +762,14 @@ fun DoctorFormDialog(
                     value = description,
                     onValueChange = { description = it },
                     label = { Text("Deskripsi/Biografi") },
-                    modifier = Modifier.fillMaxWidth().height(80.dp)
-                )
-
-                OutlinedTextField(
-                    value = scheduleStr,
-                    onValueChange = { scheduleStr = it },
-                    label = { Text("Jadwal Praktik (pisahkan dengan koma)") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(80.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentRed,
+                        unfocusedBorderColor = TextHint,
+                        focusedLabelColor = AccentRed
+                    )
                 )
             }
         },
@@ -753,8 +777,7 @@ fun DoctorFormDialog(
             Button(
                 onClick = {
                     if (name.isNotBlank()) {
-                        val scheduleList = scheduleStr.split(",").map { it.trim() }.filter { it.isNotEmpty() }
-                        onConfirm(name, specialization, description, scheduleList)
+                        onConfirm(name, specialization, description, emptyList())
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = AccentRed),
@@ -804,7 +827,14 @@ fun PatientFormDialog(
                     onValueChange = { name = it },
                     label = { Text("Nama Lengkap") },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentRed,
+                        unfocusedBorderColor = TextHint,
+                        focusedLabelColor = AccentRed
+                    )
                 )
 
                 OutlinedTextField(
@@ -812,8 +842,15 @@ fun PatientFormDialog(
                     onValueChange = { email = it },
                     label = { Text("Email") },
                     singleLine = true,
-                    enabled = patient == null, // email tidak boleh diubah jika edit
-                    modifier = Modifier.fillMaxWidth()
+                    enabled = patient == null,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentRed,
+                        unfocusedBorderColor = TextHint,
+                        focusedLabelColor = AccentRed
+                    )
                 )
 
                 OutlinedTextField(
@@ -821,7 +858,14 @@ fun PatientFormDialog(
                     onValueChange = { phone = it },
                     label = { Text("No. HP / WA") },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentRed,
+                        unfocusedBorderColor = TextHint,
+                        focusedLabelColor = AccentRed
+                    )
                 )
 
                 ExposedDropdownMenuBox(
@@ -835,7 +879,14 @@ fun PatientFormDialog(
                         readOnly = true,
                         label = { Text("Jenis Kelamin") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = genderExpanded) },
-                        modifier = Modifier.menuAnchor().fillMaxWidth()
+                        modifier = Modifier.menuAnchor().fillMaxWidth(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = TextPrimary,
+                            unfocusedTextColor = TextPrimary,
+                            focusedBorderColor = AccentRed,
+                            unfocusedBorderColor = TextHint,
+                            focusedLabelColor = AccentRed
+                        )
                     )
                     ExposedDropdownMenu(
                         expanded = genderExpanded,
@@ -858,14 +909,28 @@ fun PatientFormDialog(
                     onValueChange = { birthDate = it },
                     label = { Text("Tanggal Lahir (YYYY-MM-DD)") },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentRed,
+                        unfocusedBorderColor = TextHint,
+                        focusedLabelColor = AccentRed
+                    )
                 )
 
                 OutlinedTextField(
                     value = address,
                     onValueChange = { address = it },
                     label = { Text("Alamat") },
-                    modifier = Modifier.fillMaxWidth().height(80.dp)
+                    modifier = Modifier.fillMaxWidth().height(80.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentRed,
+                        unfocusedBorderColor = TextHint,
+                        focusedLabelColor = AccentRed
+                    )
                 )
             }
         },

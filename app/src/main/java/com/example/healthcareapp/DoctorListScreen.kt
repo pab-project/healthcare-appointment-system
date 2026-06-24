@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +25,17 @@ fun DoctorListScreen(
     onDoctorClick: (Doctor) -> Unit,
     onBackClick: () -> Unit
 ) {
+    var searchQuery by remember { mutableStateOf("") }
+
+    val filteredDoctors = if (searchQuery.isBlank()) {
+        doctors
+    } else {
+        doctors.filter {
+            it.name.contains(searchQuery, ignoreCase = true) ||
+                    it.specialization.contains(searchQuery, ignoreCase = true)
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -53,10 +64,33 @@ fun DoctorListScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            // ── Search bar ────────────────────────────────────────────────
+            item {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("Cari dokter atau spesialisasi...", color = TextHint) },
+                    leadingIcon = { Text("🔍", modifier = Modifier.padding(start = 8.dp)) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 4.dp),
+                    singleLine = true,
+                    shape = RoundedCornerShape(14.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = PrimaryBlue,
+                        unfocusedBorderColor = TextHint,
+                        focusedContainerColor = White,
+                        unfocusedContainerColor = White,
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary
+                    )
+                )
+            }
+
             // ── Jumlah dokter ────────────────────────────────────────────────
             item {
                 Text(
-                    text = "${doctors.size} dokter tersedia",
+                    text = "${filteredDoctors.size} dokter ditemukan",
                     fontSize = 13.sp,
                     color = TextSecondary,
                     modifier = Modifier.padding(horizontal = 2.dp, vertical = 4.dp)
@@ -64,12 +98,12 @@ fun DoctorListScreen(
             }
 
             // ── List dokter ──────────────────────────────────────────────────
-            items(doctors) { doctor ->
+            items(filteredDoctors) { doctor ->
                 DoctorCard(doctor = doctor, onClick = { onDoctorClick(doctor) })
             }
 
             // ── Empty state ──────────────────────────────────────────────────
-            if (doctors.isEmpty()) {
+            if (filteredDoctors.isEmpty()) {
                 item {
                     Box(
                         modifier = Modifier
@@ -77,11 +111,18 @@ fun DoctorListScreen(
                             .padding(vertical = 32.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = "Tidak ada dokter tersedia.",
-                            color = TextHint,
-                            fontSize = 14.sp
-                        )
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text("🔍", fontSize = 32.sp)
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                text = if (searchQuery.isNotBlank())
+                                    "Tidak ditemukan dokter untuk \"$searchQuery\""
+                                else
+                                    "Tidak ada dokter tersedia.",
+                                color = TextHint,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
             }

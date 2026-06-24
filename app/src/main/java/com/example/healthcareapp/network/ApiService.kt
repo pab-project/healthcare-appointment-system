@@ -79,6 +79,26 @@ interface ApiService {
         @Query("status") status: String? = null
     ): Response<AppointmentListResponse>
 
+    // Doctor timeslot CRUD
+    @GET("doctor/slots")
+    suspend fun getDoctorOwnSlots(): Response<TimeSlotListResponse>
+
+    @POST("doctor/slots")
+    suspend fun createDoctorSlot(
+        @Body request: CreateTimeSlotRequest
+    ): Response<SingleTimeSlotResponse>
+
+    @PUT("doctor/slots/{id}")
+    suspend fun updateDoctorSlot(
+        @Path("id") id: Int,
+        @Body request: CreateTimeSlotRequest
+    ): Response<SingleTimeSlotResponse>
+
+    @DELETE("doctor/slots/{id}")
+    suspend fun deleteDoctorSlot(
+        @Path("id") id: Int
+    ): Response<GenericResponse>
+
     @PATCH("doctor/appointments/{id}/done")
     suspend fun markAppointmentDone(
         @Path("id") id: Int,
@@ -125,6 +145,29 @@ interface ApiService {
 
     @DELETE("admin/patients/{id}")
     suspend fun deletePatientByAdmin(
+        @Path("id") id: Int
+    ): Response<GenericResponse>
+
+    // Admin timeslot routes
+    @GET("admin/doctors/{doctorId}/slots")
+    suspend fun getAdminDoctorSlots(
+        @Path("doctorId") doctorId: Int
+    ): Response<TimeSlotListResponse>
+
+    @POST("admin/doctors/{doctorId}/slots")
+    suspend fun createAdminDoctorSlot(
+        @Path("doctorId") doctorId: Int,
+        @Body request: CreateTimeSlotRequest
+    ): Response<SingleTimeSlotResponse>
+
+    @PUT("admin/slots/{id}")
+    suspend fun updateAdminDoctorSlot(
+        @Path("id") id: Int,
+        @Body request: CreateTimeSlotRequest
+    ): Response<SingleTimeSlotResponse>
+
+    @DELETE("admin/slots/{id}")
+    suspend fun deleteAdminDoctorSlot(
         @Path("id") id: Int
     ): Response<GenericResponse>
 }
@@ -185,4 +228,10 @@ data class CompleteAppointmentRequest(
     val treatment: String?,
     val medications: String?,
     val notes: String?
+)
+
+data class CreateTimeSlotRequest(
+    val date: String,
+    @SerializedName("start_time") val startTime: String,
+    @SerializedName("end_time") val endTime: String
 )
